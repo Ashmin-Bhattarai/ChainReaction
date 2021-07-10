@@ -23,6 +23,7 @@ class Network:
     def initial_data(self):
         try:
             # self.client.connect(self.addr)
+            print("Fetching initial data...")
             return pickle.loads(self.client.recv(8192))
         except:
             pass
@@ -30,6 +31,7 @@ class Network:
 
     def send(self,data):
         try:            
+            print("client sending data...")
             self.client.send(pickle.dumps(data))
             # return pickle.loads(self.client.recv(2048))
         except socket.error as e:
@@ -37,7 +39,8 @@ class Network:
 
     def receive(self):
         try:
-            self.client.connect(self.addr)
+            print("Clinet receiving data...")
+            # self.client.connect(self.addr)
             return pickle.loads(self.client.recv(8192))
         except socket.error as e:
             print(e)

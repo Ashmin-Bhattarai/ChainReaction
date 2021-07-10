@@ -1,4 +1,3 @@
-from tkinter.constants import NE
 from network import *
 n=Network()
 p=Network()

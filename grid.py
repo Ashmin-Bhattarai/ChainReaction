@@ -1,23 +1,31 @@
 from network import *
 import pickle
+import tkinter as tk
 
 
 class Grid:
-    def __init__(self, size, c, players,player_number,cells,n):
-        self.size = size
-        self.c = c
-        self.player = 1
+    def __init__(self,playerid,color,cells,player_number):
+        self.size = 8
+        self.playerid = playerid
         self.cord_list = []
         self.cells = cells
-        self.players = players
+        self.color = color
         self.player_number=player_number
+        self.mouse=False
+        self.clicked=False
+    
+    def set_c(self,c):
+        self.c=c
+    
+    def set_n(self,n):
         self.n=n
 
     def set_cells(self,cells):
         self.cells=cells
+    
+    def mouse_enable(self,value):
+        self.mouse=value
 
-    def set_curr_player(self,cur_player):
-        self.player=cur_player
 
 
     def grid(self, event=None):
@@ -28,14 +36,14 @@ class Grid:
         self.xd = self.w//self.size
         self.yd = self.h//self.size
 
-        self.c.delete('all')
+        # self.c.delete('all')
 
         # Creates all vertical lines
         for i in range(0, self.w, self.xd):
-            verticalLine = self.c.create_line([(i, 0), (i, self.h)], tag='grid_line', fill=self.players[self.player].color)
+            verticalLine = self.c.create_line([(i, 0), (i, self.h)], tag='grid_line', fill=self.color)
         # Creates all horizontal lines
         for i in range(0, self.h, self.yd):
-            horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.players[self.player].color)
+            horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.color)
         
 
         # display text
@@ -43,7 +51,7 @@ class Grid:
             for j in range(self.size):
                 x = i * self.xd + self.xd//2
                 y = j * self.yd + self.yd//2
-                self.fill_color = self.players[self.cells[i][j][1]].color
+                self.fill_color = self.color
 
                 self.c.create_text(x, y, fill=self.fill_color, text=str(self.cells[i][j][0]))
                 self.drawCircles(i, j)
@@ -88,253 +96,32 @@ class Grid:
             self.c.update()
     
 
-
-    def explode(self):
-        global cord_list
-        x = self.cord_list[0][0]
-        y = self.cord_list[0][1]
-        if x == 0 and y == 0 and self.cells[x][y][0] >= 2:
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y + 1])
-
-        elif x == 7 and y == 0 and self.cells[x][y][0] >= 2:
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y + 1])
-            # explode(x - 1, y)
-            # explode(x, y + 1)
-
-        elif x == 0 and y == 7 and self.cells[x][y][0] >= 2:
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y - 1])
-            # explode(x + 1, y)
-            # explode(x, y - 1)
-
-        elif x == 7 and y == 7 and self.cells[x][y][0] >= 2:
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y - 1])
-            # explode(x - 1, y)
-            # explode(x, y - 1)
-
-        elif x == 0 and y in [1, 2, 3, 4, 5, 6] and self.cells[x][y][0] >= 3:
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y - 1])
-            self.cord_list.append([x, y + 1])
-            # explode(x + 1, y)
-            # explode(x, y - 1)
-            # explode(x, y + 1)
-
-        elif x == 7 and y in [1, 2, 3, 4, 5, 6] and self.cells[x][y][0] >= 3:
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y - 1])
-            self.cord_list.append([x, y + 1])
-            # explode(x - 1, y)
-            # explode(x, y + 1)
-            # explode(x, y - 1)
-
-        elif y == 0 and x in [1, 2, 3, 4, 5, 6] and self.cells[x][y][0] >= 3:
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y + 1])
-            # explode(x + 1, y)
-            # explode(x - 1, y)
-            # explode(x, y + 1)
-
-        elif y == 7 and x in [1, 2, 3, 4, 5, 6] and self.cells[x][y][0] >= 3:
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y - 1])
-            # explode(x - 1, y)
-            # explode(x + 1, y)
-            # explode(x, y - 1)
-
-        elif x in [1, 2, 3, 4, 5, 6] and y in [1, 2, 3, 4, 5, 6] and self.cells[x][y][0] >= 4:
-            self.cells[x][y][0] = self.cells[x][y][0] - 4
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y - 1])
-            self.cord_list.append([x, y + 1])
-            # explode(x + 1, y)
-            # explode(x - 1, y)
-            # explode(x, y - 1)
-            # explode(x, y + 1)
-
-        self.cord_list = self.cord_list[1:]
-        # if len(cord_list) != 0:
-        #     print("x,y, v = ", x, y, cells[x][y][0])
-        #     explode()
-
     def numbering(self, event):
-        # cells=
-        #global player, cells, cord_list
-        self.x = int(event.x / (self.w//self.size))
-        self.y = int(event.y / (self.h//self.size))
-        
-        #print(self.x, self.y)
-
-        if self.isvalid(self.x, self.y):
-            self.cells[self.x][self.y][0] += 1
-            self.cells[self.x][self.y][1] = self.player
-            self.n.send(self.cells)
-            print("client:Data sent")
-            #print(self.cells[self.x][self.y])
-            self.cord_list = [[self.x, self.y]]
-
-            #print("x,y, v = ", x, y, cells[x][y][0])
-            self.explode()
-
-            while len(self.cord_list) != 0:
-                self.explode()
+        if self.mouse:
+            self.clicked=True
+            self.x = int(event.x / (self.w//self.size))
+            self.y = int(event.y / (self.h//self.size))
             
-            self.player += 1
-
-            if self.player > self.player_number:
-                self.player =1
+            #print(self.x, self.y)
                 
-            self.grid()
 
-    def isvalid(self, x, y):
-        if self.cells[x][y][1] == 0 or self.cells[x][y][1] == self.player:
+    def exec(self):
+        self.clicked=False
+        self.cells[self.x][self.y][0] += 1
+        self.cells[self.x][self.y][1] = self.playerid
+
+        # self.n.send(self.cells)
+        # print("client:Data sent")
+
+        self.playerid += 1
+
+        # if self.player > self.player_number:
+        #     self.player =1
+            
+        self.grid()
+
+    def isvalid(self):
+        if self.cells[self.x][self.y][1] == 0 or self.cells[self.x][self.y][1] == self.playerid:
             return True
         else:
             return False

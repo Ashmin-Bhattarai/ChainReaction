@@ -3,7 +3,7 @@ import pickle
 
 
 class Grid:
-    def __init__(self, size, c, players,player_number,cells):
+    def __init__(self, size, c, players,player_number,cells,n):
         self.size = size
         self.c = c
         self.player = 1
@@ -11,7 +11,14 @@ class Grid:
         self.cells = cells
         self.players = players
         self.player_number=player_number
-        self.n=Network()
+        self.n=n
+
+    def set_cells(self,cells):
+        self.cells=cells
+
+    def set_curr_player(self,cur_player):
+        self.player=cur_player
+
 
     def grid(self, event=None):
         #global player, colors, cells
@@ -30,7 +37,6 @@ class Grid:
         for i in range(0, self.h, self.yd):
             horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.players[self.player].color)
         
-
 
         # display text
         for i in range(self.size):
@@ -297,21 +303,20 @@ class Grid:
         # if len(cord_list) != 0:
         #     print("x,y, v = ", x, y, cells[x][y][0])
         #     explode()
-    
-
 
     def numbering(self, event):
         # cells=
         #global player, cells, cord_list
         self.x = int(event.x / (self.w//self.size))
         self.y = int(event.y / (self.h//self.size))
-
+        
         #print(self.x, self.y)
 
         if self.isvalid(self.x, self.y):
             self.cells[self.x][self.y][0] += 1
             self.cells[self.x][self.y][1] = self.player
-            
+            self.n.send(self.cells)
+            print("client:Data sent")
             #print(self.cells[self.x][self.y])
             self.cord_list = [[self.x, self.y]]
 
@@ -320,15 +325,15 @@ class Grid:
 
             while len(self.cord_list) != 0:
                 self.explode()
-
+            
             self.player += 1
 
-            if self.player > self.player_number-1:
-                self.player = 1
+            if self.player > self.player_number:
+                self.player =1
+                
             self.grid()
 
     def isvalid(self, x, y):
-        global cells
         if self.cells[x][y][1] == 0 or self.cells[x][y][1] == self.player:
             return True
         else:

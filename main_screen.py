@@ -13,7 +13,6 @@ def mainScreen():
 
     def gameStart():
         global selectedPlayer
-        print("from gameStart", selectedPlayer)
         root.destroy()
 
     #selectedPlayer = 2

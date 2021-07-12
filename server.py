@@ -29,20 +29,27 @@ def threaded_client(conn):
     run=True
     conn.sendall(pickle.dumps(players[current_player]))
     # conn.send(pickle.dumps(cells))
-    # conn.send(pickle.dumps(players))    
+    # conn.send(pickle.dumps(players)) 
+    foo=True   
     while run:      
         try:       
             cell,playerid,played=pickle.loads(conn.recv(2048))
-    
-            if playerid==1 and played==True:
+            
+            print("SERVER:playerid=",playerid,"played=",played)
+            foo=False
+            if (playerid==1 and played==True):
+                foo=True
                 playerid=2
                 played=False
                 print("Player 2's turn:")
-            elif playerid==2 and played==True:
+                # conn.sendall(pickle.dumps([cell,playerid,played]))
+            elif (playerid==2 and played==True):
+                foo=True
                 playerid=1
                 played=False
                 print("Player 1's turn:")
-            print("Size of sent data",sys.getsizeof([cell,playerid]))  
+                # conn.sendall(pickle.dumps([cell,playerid,played]))
+            # print("Size of sent data",sys.getsizeof([cell,playerid]))  
             conn.sendall(pickle.dumps([cell,playerid,played]))
         except socket.error as e:
             print("Disconnected")

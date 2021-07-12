@@ -20,9 +20,6 @@ class Grid:
     
     def set_cells(self,cells):
         self.cells=cells
-    
-    def mouse_enable(self,value):
-        self.mouse=value
 
     def get_cells(self):
         return self.cells
@@ -106,19 +103,20 @@ class Grid:
                 
 
     def exec(self):
-        self.clicked=False
-        self.cells[self.x][self.y][0] += 1
-        self.cells[self.x][self.y][1] = self.playerid
+        if self.isvalid():
+            self.clicked=False
+            self.cells[self.x][self.y][0] += 1
+            self.cells[self.x][self.y][1] = self.playerid
 
-        # self.n.send(self.cells)
-        # print("client:Data sent")
+            # self.n.send(self.cells)
+            # print("client:Data sent")
 
-        self.playerid += 1
+            # self.playerid += 1
 
-        # if self.player > self.player_number:
-        #     self.player =1
-            
-        self.grid()
+            # if self.player > self.player_number:
+            #     self.player =1
+                
+            self.grid()
 
     def isvalid(self):
 

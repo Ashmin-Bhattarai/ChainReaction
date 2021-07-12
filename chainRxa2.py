@@ -5,6 +5,7 @@ from network import *
 from _thread import *
 import pygame
 import sys
+import time
 
 n=Network()
 root = tk.Tk()
@@ -20,19 +21,25 @@ clock=pygame.time.Clock()
 def get_cells():
     
     global cells,c
+    foo=True
     while True:
         clock.tick(60)
-        cells.cells,cells.playerid,cells.played=n.send([cells.get_cells(),cells.playerid,cells.played])
         cells.set_c(c)
-        print("playerid=",cells.playerid,"player=",player,"played=",cells.played)
+        cells.cells,cells.playerid,cells.played=n.send([cells.get_cells(),cells.playerid,cells.played])
+        
+        # if foo:
+        print("Before IF:playerid=",cells.playerid,"player=",player,"played=",cells.played)
+        foo=False
         if cells.playerid==player:
             cells.mouse=True
         else:
             cells.mouse=False
         # print(cells.mouse)
 
-        if cells.clicked==True and cells.isvalid():
+        if cells.clicked==True:
             cells.exec()
+            print("After Clicked: playerid=",cells.playerid,"player=",player,"played=",cells.played)
+            foo=True
             cells.mouse=False 
 
 start_new_thread(get_cells,())

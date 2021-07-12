@@ -31,7 +31,7 @@ root = tk.Tk()
 c = tk.Canvas(root, height=800, width=800, bg='white')
 c.pack()
 
-cells = Grid(size, c, players, colors, player_number)
+cells = Grid(size, c, players, player_number)
 
 
 

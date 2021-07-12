@@ -1,13 +1,16 @@
 class Grid:
-    def __init__(self, size, c, players, colors, player_number):
+    def __init__(self, size, c, players, player_number):
         self.size = size
         self.c = c
         self.player = 1
         self.cord_list = []
         self.cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
         self.players = players
-        self.colors = colors
         self.player_number = player_number
+        self.playerIndex = 1
+        self.firstTime = True
+        self.deletedPlayer = 0
+        
 
 
 
@@ -24,10 +27,10 @@ class Grid:
 
         # Creates all vertical lines
         for i in range(0, self.w, self.xd):
-            verticalLine = self.c.create_line([(i, 0), (i, self.h)], tag='grid_line', fill=self.players[self.player].color)
+            verticalLine = self.c.create_line([(i, 0), (i, self.h)], tag='grid_line', fill=self.players[self.playerIndex].color)
         # Creates all horizontal lines
         for i in range(0, self.h, self.yd):
-            horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.players[self.player].color)
+            horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.players[self.playerIndex].color)
         
 
 
@@ -301,7 +304,41 @@ class Grid:
         #     print("x,y, v = ", x, y, cells[x][y][0])
         #     explode()
     
-
+    def checkstatus(self):
+        ballNum = [0 for _ in self.players]
+        if not self.firstTime:
+            for x in range(0, self.size):
+                for y in range(0, self.size):
+                    ballNum[self.cells[x][y][1]] = ballNum[self.cells[x][y][1]] + self.cells[x][y][0]
+                    #print(ballNum[self.cells[x][y][1]], self.cells[x][y][1], self.cells[x][y][0])
+            #print(ballNum)
+            
+            for num in range(1, len(ballNum)):
+                print(num)
+                if ballNum[num] == 0:
+                    self.players.pop(num)
+                    self.player_number -= 1
+                    
+                    for i in range(0, self.size):
+                        for j in range(0, self.size):
+                            if self.cells[i][j][1] >= num:
+                                self.cells[i][j][1] -= 1
+                                
+                    for player in self.players:
+                        if player.id >= num:
+                            player.id -= 1
+                            
+            if len(self.players) == 2:
+                print("Win By: ", self.players[1].color)
+                
+            
+                    
+    
+                
+            
+            
+            
+            
 
     def numbering(self, event):
         #global player, cells, cord_list
@@ -315,18 +352,23 @@ class Grid:
             self.cells[self.x][self.y][1] = self.player
             #print(self.cells[self.x][self.y])
             self.cord_list = [[self.x, self.y]]
-
-            print("x,y, v = ", self.x, self.y, self.cells[self.x][self.y][0])
+            #print("x,y, v = ", self.x, self.y, self.cells[self.x][self.y][0])
+            
             self.explode()
 
             while len(self.cord_list) != 0:
                 self.explode()
+                
+            self.checkstatus()
 
-            self.player += 1
+            self.playerIndex += 1
 
-            if self.player > self.player_number-1:
-                self.player = 1
+            if self.playerIndex > self.player_number-1:
+                self.playerIndex = 1
+                self.firstTime = False
+            self.player = self.players[self.playerIndex].id
             self.grid()
+            
 
     def isvalid(self, x, y):
         global cells

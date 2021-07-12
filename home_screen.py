@@ -7,9 +7,12 @@ root = tk.Tk()
 root.title('Chain Reaction')
 root.geometry("800x800")
 root.resizable(0, 0)
-font = ('Arial', 24, 'bold')
+font = ('Arial', 10, 'bold')
 
 img = ImageTk.PhotoImage(Image.open("mainMenu.jpg"))
+
+button_style = ttk.Style()
+button_style.configure('W.TButton', font=font, foreground='teal')
 
 
 def image_frame():
@@ -24,12 +27,14 @@ def home_page():
     button_frame = ttk.Frame(root, relief='raised', borderwidth=2)
     button_frame.place(x=365, y=500)
     offline_button = ttk.Button(
-        button_frame, text="Offline", command=offline_page)
+        button_frame, text="Offline", style='W.TButton', command=offline_page)
     offline_button.grid(column=0, row=1, sticky=tk.W)
-    local_button = ttk.Button(button_frame, text="Local", command=local_page) # command = lambda: fun(parameter)
+    # command = lambda: fun(parameter)
+    local_button = ttk.Button(
+        button_frame, text="Local", style='W.TButton', command=local_page)
     local_button.grid(column=0, row=2, sticky=tk.W)
     settings_button = ttk.Button(
-        button_frame, text="Settings", command=settings_page)
+        button_frame, text="Settings", style='W.TButton', command=settings_page)
     settings_button.grid(column=0, row=3, sticky=tk.W)
 
     root.mainloop()

@@ -5,6 +5,7 @@ from player import *
 import pickle
 from grid import *
 import sys
+import pygame
 
 hostname=socket.gethostname()
 ipaddress=socket.gethostbyname(hostname)
@@ -19,31 +20,33 @@ s.listen(2)
 
 current_player=-1
 cells = [[[0 for cell in range(2)] for col in range(8)] for row in range(8)]
-players=[Grid(1,"red",cells,2),Grid(1,"blue",cells,2)]
+players=[Grid(1,"red",cells,2),Grid(2,"blue",cells,2)]
+
 print("server is online. Ready to connect...")
+
 def threaded_client(conn):
     global players,current_player
     run=True
     conn.sendall(pickle.dumps(players[current_player]))
     # conn.send(pickle.dumps(cells))
     # conn.send(pickle.dumps(players))    
-    
-    while run:       
+    while run:      
         try:       
-            data=pickle.loads(conn.recv(8192))
-            print("1")
-            print(data)
-            if data:
-                print("Data received...")
-                if data.playerid==1:
-                    data.playerid=2
-                    print("Player 2's turn:")
-                else:
-                    data.playerid=1
-                    print("Player 1's turn:")
-            conn.sendall(pickle.dumps(data))
-        except:
+            cell,playerid,played=pickle.loads(conn.recv(2048))
+    
+            if playerid==1 and played==True:
+                playerid=2
+                played=False
+                print("Player 2's turn:")
+            elif playerid==2 and played==True:
+                playerid=1
+                played=False
+                print("Player 1's turn:")
+            print("Size of sent data",sys.getsizeof([cell,playerid]))  
+            conn.sendall(pickle.dumps([cell,playerid,played]))
+        except socket.error as e:
             print("Disconnected")
+            print("server error:",e)
             current_player-=1
             break
 

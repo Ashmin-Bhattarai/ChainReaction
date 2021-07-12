@@ -1,5 +1,6 @@
 import socket
 import pickle
+from tkinter.constants import FIRST
 from grid import *
 
 class Network:
@@ -11,7 +12,8 @@ class Network:
         self.server=ipaddress
         self.port=5555
         self.addr=(self.server,self.port)
-        self.client.connect(self.addr)
+        self.first=True
+        
     #     self.connect()
     #     
     # def getP(self):
@@ -26,26 +28,26 @@ class Network:
 
     def initial_data(self):
         try:
-            # self.client.connect(self.addr)
+            self.client.connect(self.addr)
             print("Fetching initial data...")
-            return pickle.loads(self.client.recv(8192))
+            return pickle.loads(self.client.recv(2048))
         except:
             pass
 
 
     def send(self,data):
-        try:            
-            print("client sending data...")
+        try:         
             self.client.send(pickle.dumps(data))
-            # return pickle.loads(self.client.recv(2048))
+            print("Client receiving data...")
+            return pickle.loads(self.client.recv(2048*10))
         except socket.error as e:
             print(e)
 
-    def receive(self):
-        try:
-            print("Clinet receiving data...")
-            # self.client.connect(self.addr)
-            return pickle.loads(self.client.recv(8192))
-        except socket.error as e:
-            print(e)
+    # def receive(self):
+    #     try:
+    #         print("Clinet receiving data...")
+    #         # self.client.connect(self.addr)
+    #         return pickle.loads(self.client.recv(8192))
+    #     except socket.error as e:
+    #         print(e)
 

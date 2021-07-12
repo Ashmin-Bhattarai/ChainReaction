@@ -4,6 +4,7 @@ from player import *
 from network import *
 from _thread import *
 import pygame
+import sys
 
 n=Network()
 root = tk.Tk()
@@ -11,22 +12,19 @@ c = tk.Canvas(root, height=800, width=800, bg='white')
 c.pack()
 
 cells=n.initial_data()
-print(type(cells))
-cells.set_n(n)
+
 c.bind('<Configure>', cells.grid)
 c.bind('<Button-1>', cells.numbering)
-cells.set_c(c)
-
+player=cells.playerid
+clock=pygame.time.Clock()
 def get_cells():
-    global cells,n,root
-    print(type(cells))
     
-    print("Entering get_cells")
-    
-    clock = pygame.time.Clock()
-    player=cells.playerid
+    global cells,c
     while True:
-        # print("playerid=",cells.playerid,"player=",player)
+        clock.tick(60)
+        cells.cells,cells.playerid,cells.played=n.send([cells.get_cells(),cells.playerid,cells.played])
+        cells.set_c(c)
+        print("playerid=",cells.playerid,"player=",player,"played=",cells.played)
         if cells.playerid==player:
             cells.mouse=True
         else:
@@ -34,11 +32,8 @@ def get_cells():
         # print(cells.mouse)
 
         if cells.clicked==True and cells.isvalid():
-            # n.send(cells)
             cells.exec()
-        # cells=n.receive()
-        
-
+            cells.mouse=False 
 
 start_new_thread(get_cells,())
 root.mainloop()

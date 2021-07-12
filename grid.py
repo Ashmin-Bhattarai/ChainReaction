@@ -13,20 +13,19 @@ class Grid:
         self.player_number=player_number
         self.mouse=False
         self.clicked=False
+        self.played=False
     
     def set_c(self,c):
         self.c=c
     
-    def set_n(self,n):
-        self.n=n
-
     def set_cells(self,cells):
         self.cells=cells
     
     def mouse_enable(self,value):
         self.mouse=value
 
-
+    def get_cells(self):
+        return self.cells
 
     def grid(self, event=None):
         #global player, colors, cells
@@ -36,7 +35,7 @@ class Grid:
         self.xd = self.w//self.size
         self.yd = self.h//self.size
 
-        # self.c.delete('all')
+        self.c.delete('all')
 
         # Creates all vertical lines
         for i in range(0, self.w, self.xd):
@@ -125,6 +124,7 @@ class Grid:
 
         if self.cells[self.x][self.y][1] == 0 or self.cells[self.x][self.y][1] == self.playerid:
             print("is valid true")
+            self.played=True
             return True
         else:
             print("is valid false")

@@ -20,22 +20,23 @@ cells.set_c(c)
 def get_cells():
     global cells,n,root
     print(type(cells))
-    n.send(cells)
+    
     print("Entering get_cells")
     
     clock = pygame.time.Clock()
     player=cells.playerid
     while True:
-        print("playerid=",cells.playerid,"player=",player)
+        # print("playerid=",cells.playerid,"player=",player)
         if cells.playerid==player:
             cells.mouse=True
         else:
             cells.mouse=False
+        # print(cells.mouse)
 
-        if cells.clicked==True and cells.isvalid:
-            
+        if cells.clicked==True and cells.isvalid():
+            # n.send(cells)
             cells.exec()
-        cells=n.receive()
+        # cells=n.receive()
         
 
 

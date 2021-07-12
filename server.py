@@ -45,9 +45,11 @@ def threaded_client(conn):
         except:
             print("Disconnected")
             current_player-=1
-            # run=False
-            conn.close()
-            sys.exit()
+            break
+
+    run=False
+    conn.close()
+    sys.exit()
 
         
 

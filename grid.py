@@ -97,7 +97,8 @@ class Grid:
     
 
     def numbering(self, event):
-        if self.mouse:
+        print(self.mouse)
+        if self.mouse==True:
             self.clicked=True
             self.x = int(event.x / (self.w//self.size))
             self.y = int(event.y / (self.h//self.size))
@@ -121,7 +122,10 @@ class Grid:
         self.grid()
 
     def isvalid(self):
+
         if self.cells[self.x][self.y][1] == 0 or self.cells[self.x][self.y][1] == self.playerid:
+            print("is valid true")
             return True
         else:
+            print("is valid false")
             return False

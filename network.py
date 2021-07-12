@@ -1,5 +1,6 @@
 import socket
 import pickle
+from grid import *
 
 class Network:
     def __init__(self):
@@ -35,7 +36,7 @@ class Network:
     def send(self,data):
         try:            
             print("client sending data...")
-            self.client.sendall(pickle.dumps(data))
+            self.client.send(pickle.dumps(data))
             # return pickle.loads(self.client.recv(2048))
         except socket.error as e:
             print(e)

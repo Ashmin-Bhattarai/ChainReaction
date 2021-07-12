@@ -41,6 +41,7 @@ def threaded_client(conn):
         else:
             print("Disconnected")
             current_player-=1
+            conn.disconnect()
 
         # if data:
         #     conn.send(pickle.dumps(data))

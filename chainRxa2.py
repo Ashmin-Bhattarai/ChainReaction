@@ -11,14 +11,18 @@ c = tk.Canvas(root, height=800, width=800, bg='white')
 c.pack()
 
 cells=n.initial_data()
+print(type(cells))
 cells.set_n(n)
 c.bind('<Configure>', cells.grid)
 c.bind('<Button-1>', cells.numbering)
 cells.set_c(c)
 
 def get_cells():
-    print("Entering get_cells")
     global cells,n,root
+    print(type(cells))
+    n.send(cells)
+    print("Entering get_cells")
+    
     clock = pygame.time.Clock()
     player=cells.playerid
     while True:
@@ -29,7 +33,7 @@ def get_cells():
             cells.mouse=False
 
         if cells.clicked==True and cells.isvalid:
-            n.send(cells)
+            
             cells.exec()
         cells=n.receive()
         

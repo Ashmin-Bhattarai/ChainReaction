@@ -4,6 +4,7 @@ from tkinter.constants import CHECKBUTTON
 from player import *
 import pickle
 from grid import *
+import sys
 
 hostname=socket.gethostname()
 ipaddress=socket.gethostbyname(hostname)
@@ -23,25 +24,32 @@ print("server is online. Ready to connect...")
 def threaded_client(conn):
     global players,current_player
     run=True
-    conn.send(pickle.dumps(players[current_player]))
+    conn.sendall(pickle.dumps(players[current_player]))
     # conn.send(pickle.dumps(cells))
     # conn.send(pickle.dumps(players))    
     
-    while run:               
-        data=pickle.loads(conn.recv(8192))
-        if data:
-            print("Data received...")
-            if data.playerid==1:
-                data.playerid=2
-                print("Player 2's turn:")
-            else:
-                data.playerid=1
-                print("Player 1's turn:")
+    while run:       
+        try:       
+            data=pickle.loads(conn.recv(8192))
+            print("1")
+            print(data)
+            if data:
+                print("Data received...")
+                if data.playerid==1:
+                    data.playerid=2
+                    print("Player 2's turn:")
+                else:
+                    data.playerid=1
+                    print("Player 1's turn:")
             conn.sendall(pickle.dumps(data))
-        else:
+        except:
             print("Disconnected")
             current_player-=1
-            conn.disconnect()
+            # run=False
+            conn.close()
+            sys.exit()
+
+        
 
         # if data:
         #     conn.send(pickle.dumps(data))

@@ -53,7 +53,7 @@ def threaded_client(conn):
             conn.sendall(pickle.dumps([cell,playerid,played]))
         except socket.error as e:
             print("Disconnected")
-            print("server error:",e)
+            print("server error: ",e)
             current_player-=1
             break
 

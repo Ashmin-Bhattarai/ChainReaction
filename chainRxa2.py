@@ -13,7 +13,8 @@ c = tk.Canvas(root, height=800, width=800, bg='white')
 c.pack()
 
 cells=n.initial_data()
-
+cells.set_c(c)
+print(cells.gridcolor)
 c.bind('<Configure>', cells.grid)
 c.bind('<Button-1>', cells.numbering)
 player=cells.playerid
@@ -22,11 +23,23 @@ def get_cells():
     
     global cells,c
     foo=True
+    tempcolor=cells.gridcolor
     while True:
         clock.tick(60)
-        cells.set_c(c)
-        cells.cells,cells.playerid,cells.played=n.send([cells.get_cells(),cells.playerid,cells.played])
         
+        Tcells,Tplayerid,Tplayed,Tcolor=n.send([cells.get_cells(),cells.playerid,cells.played])
+        
+        if Tcells !=0:
+            cells.cells=Tcells
+        cells.gridcolor=Tcolor
+        # cells.grid()
+        if Tcolor != tempcolor:
+            cells.grid()
+            tempcolor=Tcolor
+        
+        print("Tcolor=",Tcolor,"tempcolor",tempcolor)
+        cells.played=Tplayed
+        cells.playerid=Tplayerid
         # if foo:
         #print("Before IF:playerid=",cells.playerid,"player=",player,"played=",cells.played)
         foo=False

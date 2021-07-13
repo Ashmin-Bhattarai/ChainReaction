@@ -16,13 +16,13 @@ port=5555
 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.bind((server,port))
-
-s.listen(2)
+maxplayer=3
+s.listen(maxplayer)
 
 current_player=-1
 cells = [[[0 for cell in range(2)] for col in range(8)] for row in range(8)]
-players=[Grid(1,"red",cells,2),Grid(2,"blue",cells,2)]
-
+# players=[Grid(1,"red",cells,2),Grid(2,"blue",cells,2)]
+players=[Grid(1,"red",cells,2),Grid(2,"blue",cells,2),Grid(3,"green",cells,2),Grid(4,"yellow",cells,2)]
 print("server is online. Ready to connect...")
 clock=pygame.time.Clock()
 def threaded_client(conn):
@@ -33,19 +33,22 @@ def threaded_client(conn):
     # conn.send(pickle.dumps(players))    
     while run:     
         clock.tick(60) 
-        try:       
+        try: 
             cell,playerid,played=pickle.loads(conn.recv(2048))
-            
-            print("SERVER:playerid=",current_player+1,"played=",played)
+            color=players[current_player].color
+            print("SERVER:playerid=",current_player+1,"played=",played,"color=",color)
             if played==True:
                 current_player+=1
-                if current_player>len(players)-1:
+                if current_player>maxplayer-1:
                     current_player=0
-                playerid=current_player
-                played= False
+                played= False  
+                color=players[current_player].color
+                  
+            else:
+                cell=0  
+                 
+            conn.sendall(pickle.dumps([cell,current_player+1,played,color]))
 
-           
-            conn.sendall(pickle.dumps([cell,current_player+1,played]))
         except socket.error as e:
             print("Disconnected")
             print("server error: ",e)

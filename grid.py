@@ -14,6 +14,8 @@ class Grid:
         self.mouse=False
         self.clicked=False
         self.played=False
+        self.gridcolor=self.color
+        print("self grid color=",self.gridcolor)
     
     def set_c(self,c):
         self.c=c
@@ -36,10 +38,10 @@ class Grid:
 
         # Creates all vertical lines
         for i in range(0, self.w, self.xd):
-            verticalLine = self.c.create_line([(i, 0), (i, self.h)], tag='grid_line', fill=self.color)
+            verticalLine = self.c.create_line([(i, 0), (i, self.h)], tag='grid_line', fill=self.gridcolor)
         # Creates all horizontal lines
         for i in range(0, self.h, self.yd):
-            horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.color)
+            horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.gridcolor)
         
 
         # display text

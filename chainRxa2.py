@@ -28,7 +28,7 @@ def get_cells():
         cells.cells,cells.playerid,cells.played=n.send([cells.get_cells(),cells.playerid,cells.played])
         
         # if foo:
-        print("Before IF:playerid=",cells.playerid,"player=",player,"played=",cells.played)
+        #print("Before IF:playerid=",cells.playerid,"player=",player,"played=",cells.played)
         foo=False
         if cells.playerid==player:
             cells.mouse=True
@@ -38,9 +38,10 @@ def get_cells():
 
         if cells.clicked==True:
             cells.exec()
-            print("After Clicked: playerid=",cells.playerid,"player=",player,"played=",cells.played)
+            #print("After Clicked: playerid=",cells.playerid,"player=",player,"played=",cells.played)
             foo=True
             cells.mouse=False 
+            print("cells.played=",cells.played)
 
 start_new_thread(get_cells,())
 root.mainloop()

@@ -29,27 +29,32 @@ def threaded_client(conn):
     run=True
     conn.sendall(pickle.dumps(players[current_player]))
     # conn.send(pickle.dumps(cells))
-    # conn.send(pickle.dumps(players)) 
-    foo=True   
+    # conn.send(pickle.dumps(players))    
     while run:      
         try:       
             cell,playerid,played=pickle.loads(conn.recv(2048))
             
             print("SERVER:playerid=",playerid,"played=",played)
-            foo=False
-            if (playerid==1 and played==True):
-                foo=True
-                playerid=2
-                played=False
-                print("Player 2's turn:")
-                # conn.sendall(pickle.dumps([cell,playerid,played]))
-            elif (playerid==2 and played==True):
-                foo=True
-                playerid=1
-                played=False
-                print("Player 1's turn:")
-                # conn.sendall(pickle.dumps([cell,playerid,played]))
-            # print("Size of sent data",sys.getsizeof([cell,playerid]))  
+            if played==True:
+                current_player+=1
+                if current_player>len(players):
+                    current_player=1
+                playerid=current_player
+                played= False
+
+            # if (playerid==1 and played==True):
+            #     foo=True
+            #     playerid=2
+            #     played=False
+            #     print("Player 2's turn:")
+            #     # conn.sendall(pickle.dumps([cell,playerid,played]))
+            # elif (playerid==2 and played==True):
+            #     foo=True
+            #     playerid=1
+            #     played=False
+            #     print("Player 1's turn:")
+            #     # conn.sendall(pickle.dumps([cell,playerid,played]))
+            # # print("Size of sent data",sys.getsizeof([cell,playerid]))  
             conn.sendall(pickle.dumps([cell,playerid,played]))
         except socket.error as e:
             print("Disconnected")

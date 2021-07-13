@@ -30,11 +30,12 @@ def get_cells():
         # if foo:
         #print("Before IF:playerid=",cells.playerid,"player=",player,"played=",cells.played)
         foo=False
+
         if cells.playerid==player:
             cells.mouse=True
         else:
             cells.mouse=False
-        # print(cells.mouse)
+        
 
         if cells.clicked==True:
             cells.exec()

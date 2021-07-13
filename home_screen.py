@@ -7,12 +7,17 @@ root = tk.Tk()
 root.title('Chain Reaction')
 root.geometry("800x800")
 root.resizable(0, 0)
-font = ('Arial', 10, 'bold')
+font = {'font': ('Arial', 10, 'bold'), 'background': '#EE018B'}
 
 img = ImageTk.PhotoImage(Image.open("mainMenu.jpg"))
 
 button_style = ttk.Style()
-button_style.configure('W.TButton', font=font, foreground='teal')
+button_style.theme_use('clam')
+button_style.configure('W.TButton', **font)
+button_style.configure('W.TCheckbutton', **font)
+button_style.configure('W.TLabel', **font)
+button_style.configure('W.TCombobox', **font)
+button_style.map('W.TButton', background=[('active', '#00FABC')])
 
 
 def image_frame():
@@ -34,7 +39,7 @@ def home_page():
         button_frame, text="Local", style='W.TButton', command=local_page)
     local_button.grid(column=0, row=2, sticky=tk.W)
     settings_button = ttk.Button(
-        button_frame, text="Settings", style='W.TButton', command=settings_page)
+        button_frame, text="Settings", style='W.TButton', command=settings_page)  # lambda: [play_sound('soundeffects/explode.wav'), settings_page()]
     settings_button.grid(column=0, row=3, sticky=tk.W)
 
     root.mainloop()
@@ -45,9 +50,11 @@ def local_page():
     image_frame()
     button_frame = ttk.Frame(root)
     button_frame.place(x=360, y=500)
-    host_button = ttk.Button(button_frame, text="Host", command=home_page)
+    host_button = ttk.Button(button_frame, text="Host",
+                             style='W.TButton', command=home_page)
     host_button.grid(column=0, row=0, sticky=tk.W)
-    join_button = ttk.Button(button_frame, text="Join", command=home_page)
+    join_button = ttk.Button(button_frame, text="Join",
+                             style='W.TButton', command=home_page)
     join_button.grid(column=0, row=1, sticky=tk.W)
 
     root.mainloop()
@@ -56,14 +63,19 @@ def local_page():
 def settings_page():
     widget_destroy(root)
     image_frame()
-    back_button = ttk.Button(root, text="Back", command=home_page)
+    play_sound = tk.StringVar()
+    sound_button = ttk.Checkbutton(root, text='Sound', style='W.TCheckbutton', command=lambda: print(
+        play_sound), variable=play_sound, onvalue="True", offvalue="False")
+    sound_button.place(x=360, y=450)
+    back_button = ttk.Button(
+        root, text="Back", style='W.TButton', command=home_page)
     back_button.place(x=360, y=500)
     root.mainloop()
 
 
 def offline_page():
     widget_destroy(root)
-    mainScreen(root, home_page, image_frame)
+    mainScreen(root, home_page, image_frame, button_style)
 
 
 if __name__ == "__main__":

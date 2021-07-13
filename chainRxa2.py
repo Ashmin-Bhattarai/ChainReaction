@@ -15,26 +15,27 @@ class Player:
         self.color = color
 
 
-
-
-def call_this(root, mainScreen, home_page, image_frame, player_number, grid_size):
+def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style):
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
 
     def newgame_function():
-        pass
-
+        widget_destroy(root)
+        call_this(root, mainScreen, widget_destroy, home_page, image_frame,
+                  player_number - 1, grid_size, button_style)
 
     def back_function():
-        mainScreen(root, home_page, image_frame)
+        mainScreen(root, home_page, image_frame, button_style)
 
     button_frame = ttk.Frame(root)
-    button_frame.pack()
+    button_frame.pack(fill='both')
+    # button_frame.columnconfigure(0, weight=40)
     newgame_button = ttk.Button(
-        button_frame, text='New Game', command=newgame_function)
-    back_button = ttk.Button(button_frame, text='Back', command=back_function)
-    newgame_button.grid(column=0, row=0, padx=5, sticky=tk.W)
-    back_button.grid(column=1, row=0, padx=5, sticky=tk.W)
+        button_frame, text='New Game', style='W.TButton', command=newgame_function)
+    back_button = ttk.Button(button_frame, text='Back',
+                             style='W.TButton', command=back_function)
+    newgame_button.grid(column=0, row=0, padx=5, sticky=tk.EW)
+    back_button.grid(column=1, row=0, padx=5, sticky=tk.EW)
     # cells = Grid(size, c, players, colors, player_number)
 
     ttk.Separator(orient='horizontal').pack()
@@ -47,7 +48,7 @@ def call_this(root, mainScreen, home_page, image_frame, player_number, grid_size
                   width=root.winfo_width(), bg='white')
     c.pack()
 
-    cells = Grid(grid_size, c, players, colors, player_number)
+    cells = Grid(grid_size, c, players, player_number)
     c.bind('<Configure>', cells.grid)
     c.bind('<Button-1>', cells.numbering)
     root.mainloop()

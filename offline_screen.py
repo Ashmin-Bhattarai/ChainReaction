@@ -1,5 +1,5 @@
 from tkinter.constants import RADIOBUTTON
-from chainRxa2 import call_this
+from chainRxa2 import call_this,call_join
 import tkinter as tk
 from tkinter import ttk
 
@@ -15,6 +15,9 @@ def widget_destroy(root):
     for widgets in root.winfo_children():
         widgets.destroy()
 
+def join_start(root, home_page, image_frame, button_style):
+        call_join(root, mainScreen, widget_destroy, home_page, image_frame,
+                  selectedPlayer, selectedGridSize, button_style)
 
 def mainScreen(root, home_page, image_frame, button_style):
 
@@ -31,6 +34,7 @@ def mainScreen(root, home_page, image_frame, button_style):
         widget_destroy(root)
         call_this(root, mainScreen, widget_destroy, home_page, image_frame,
                   selectedPlayer, selectedGridSize, button_style)
+    
 
     def back():
         home_page()
@@ -79,6 +83,10 @@ def mainScreen(root, home_page, image_frame, button_style):
     start_btn.grid(column=0, row=0, sticky=tk.W)
     back_btn.grid(column=1, row=0, padx=3, sticky=tk.W)
     root.mainloop()
+
+
+
+    
 
 
 if __name__ == "__main__":

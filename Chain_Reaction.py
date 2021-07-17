@@ -47,22 +47,17 @@ def home_page():
 def local_page():
     widget_destroy(root)
     image_frame()
-    txt_frame=ttk.Frame(root)
-    # txt_frame.wm_attributes('-transparentcolor','green')
-    txt_frame.place(x=260, y=35)
     button_frame = ttk.Frame(root)
     button_frame.place(x=360, y=500)
-    txt=ttk.Label(txt_frame,text="Coming Soon!!",font="Arial 30 bold",background="#1f014b",foreground="#0cfc00")
-    txt.grid(column=0, row=0, sticky=tk.W)
     host_button = ttk.Button(button_frame, text="Back to Home",
                              style='W.TButton', command=home_page)
     host_button.grid(column=0, row=0, sticky=tk.W)
-    # host_button = ttk.Button(button_frame, text="Host",
-    #                          style='W.TButton', command=home_page)
-    # host_button.grid(column=0, row=0, sticky=tk.W)
-    # join_button = ttk.Button(button_frame, text="Join",
-    #                          style='W.TButton', command=home_page)
-    # join_button.grid(column=0, row=1, sticky=tk.W)
+    host_button = ttk.Button(button_frame, text="Host",
+                             style='W.TButton', command=home_page)
+    host_button.grid(column=0, row=0, sticky=tk.W)
+    join_button = ttk.Button(button_frame, text="Join",
+                             style='W.TButton', command=join_page)
+    join_button.grid(column=0, row=1, sticky=tk.W)
 
     root.mainloop()
 
@@ -84,6 +79,9 @@ def offline_page():
     widget_destroy(root)
     mainScreen(root, home_page, image_frame, button_style)
 
+def join_page():
+    widget_destroy(root)
+    call_join(root, mainScreen, widget_destroy, home_page, image_frame, "2", "8", button_style)
 
 if __name__ == "__main__":
     home_page()

@@ -1,7 +1,8 @@
 from grid import Grid
 import tkinter as tk
 from tkinter import ttk
-
+from network import *
+from _thread import *
 player = 1
 
 # cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
@@ -88,6 +89,9 @@ def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     c = tk.Canvas(root, height=root.winfo_height(),
                   width=root.winfo_width(), bg='white')
     c.pack()
+
+    n=Network()
+
 
     cells = Grid(grid_size, c, players, player_number)
     c.bind('<Configure>', cells.grid)

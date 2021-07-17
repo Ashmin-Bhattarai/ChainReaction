@@ -1,62 +1,55 @@
+from Grid import Grid
 import tkinter as tk
-from grid import *
-from player import *
-from network import *
-from _thread import *
-import pygame
-import sys
-import time
+from tkinter import ttk
 
-n=Network()
-root = tk.Tk()
-c = tk.Canvas(root, height=800, width=800, bg='white')
-c.pack()
+player = 1
 
-cells=n.initial_data()
-cells.set_c(c)
-print(cells.gridcolor)
-c.bind('<Configure>', cells.grid)
-c.bind('<Button-1>', cells.numbering)
-player=cells.playerid
-clock=pygame.time.Clock()
-def get_cells():
-    
-    global cells,c
-    foo=True
-    tempcolor=cells.gridcolor
-    while True:
-        clock.tick(60)
-        
-        Tcells,Tplayerid,Tplayed,Tcolor=n.send([cells.get_cells(),cells.playerid,cells.played])
-        
-        if Tcells !=0:
-            cells.cells=Tcells
-        cells.gridcolor=Tcolor
-        # cells.grid()
-        if Tcolor != tempcolor:
-            cells.grid()
-            tempcolor=Tcolor
-        
-        print("Tcolor=",Tcolor,"tempcolor",tempcolor)
-        cells.played=Tplayed
-        cells.playerid=Tplayerid
-        # if foo:
-        #print("Before IF:playerid=",cells.playerid,"player=",player,"played=",cells.played)
-        foo=False
+# cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
+colors = ["#000000", "#12FF00", "#01AF9D", "#FF0D0D",
+          "#0DAFE8", "#82BFDC", "#FFEB78", "#33FFDD", "#444545"]
 
-        if cells.playerid==player:
-            cells.mouse=True
-        else:
-            cells.mouse=False
-        
 
-        if cells.clicked==True:
-            cells.exec()
-            #print("After Clicked: playerid=",cells.playerid,"player=",player,"played=",cells.played)
-            foo=True
-            cells.mouse=False 
-            print("cells.played=",cells.played)
+class Player:
+    def __init__(self, id, color):
+        self.id = id
+        self.color = color
+        self.name=id
 
-start_new_thread(get_cells,())
-root.mainloop()
 
+def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style):
+    player_number, grid_size = int(player_number) + 1, int(grid_size)
+    print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
+
+    def newgame_function():
+        widget_destroy(root)
+        call_this(root, mainScreen, widget_destroy, home_page, image_frame,
+                  player_number - 1, grid_size, button_style)
+
+    def back_function():
+        mainScreen(root, home_page, image_frame, button_style)
+
+    button_frame = ttk.Frame(root)
+    button_frame.pack(fill='both')
+    # button_frame.columnconfigure(0, weight=40)
+    newgame_button = ttk.Button(
+        button_frame, text='New Game', style='W.TButton', command=newgame_function)
+    back_button = ttk.Button(button_frame, text='Back',
+                             style='W.TButton', command=back_function)
+    newgame_button.grid(column=0, row=0, padx=5, sticky=tk.EW)
+    back_button.grid(column=1, row=0, padx=5, sticky=tk.EW)
+    # cells = Grid(size, c, players, colors, player_number)
+
+    ttk.Separator(orient='horizontal').pack()
+
+    players = []
+    for i in range(0, player_number):
+        players.append(Player(i, colors[i]))
+
+    c = tk.Canvas(root, height=root.winfo_height(),
+                  width=root.winfo_width(), bg='white')
+    c.pack()
+
+    cells = Grid(grid_size, c, players, player_number)
+    c.bind('<Configure>', cells.grid)
+    c.bind('<Button-1>', cells.numbering)
+    root.mainloop()

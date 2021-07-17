@@ -20,10 +20,11 @@ def server_run():
     def threaded_client(conn):
         pass
 
-
-
-
     while True:
         conn,addr=s.accept()
         print("connected to: ",addr)
         start_new_thread(threaded_client,(conn,))
+
+
+if __name__=="__main__":
+    server_run()

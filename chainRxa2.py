@@ -89,11 +89,13 @@ def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     c = tk.Canvas(root, height=root.winfo_height(),
                   width=root.winfo_width(), bg='white')
     c.pack()
-
-    n=Network()
-
-
     cells = Grid(grid_size, c, players, player_number)
     c.bind('<Configure>', cells.grid)
     c.bind('<Button-1>', cells.numbering)
+
+    def client():
+        n=Network()
+
+
+    start_new_thread(client,())
     root.mainloop()

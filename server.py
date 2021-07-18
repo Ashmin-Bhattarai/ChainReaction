@@ -30,15 +30,13 @@ def server_run():
         while run:
             # clock.tick(60)
             try:
-                Tplayerindex,Tx,Ty,Tplayed=pickle.loads(conn.recv(2048))
+                Tx,Ty,Tplayed=pickle.loads(conn.recv(2048))
                 # print(playerindex,x,y,played)
                 # playerChange=False
                 if Tplayed==True:
-                    playerindex=Tplayerindex
-                    playerindex+=1
                     x=Tx
                     y=Ty
-                conn.sendall(pickle.dumps([playerindex,x,y]))
+                conn.sendall(pickle.dumps([x,y]))
             except socket.error as e:
                 print("disconnected")
                 run=False

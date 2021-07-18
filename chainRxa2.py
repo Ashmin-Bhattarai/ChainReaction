@@ -91,29 +91,29 @@ def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     c = tk.Canvas(root, height=root.winfo_height(),
                   width=root.winfo_width(), bg='white')
     c.pack()
-    cells = Grid(grid_size, c, players, player_number)
+    cells = Grid(grid_size, c, players, 3)
     c.bind('<Configure>', cells.grid)
     c.bind('<Button-1>', cells.numbering)
 
     def client():
         print("Client thread started:")
-        tmp=-1
-        skip=False
+        tmpx=-1
+        tmpy=-1
         n=Network()
         clock=pygame.time.Clock()
         while True:      
             clock.tick(60)      
-            nextplayer,x,y=n.send([cells.playerIndex,cells.x,cells.y,cells.played])   
+            x,y=n.send([cells.x,cells.y,cells.played])   
             
-            if tmp!=nextplayer and cells.played==False:
-                print("player changed: x=",x,"y=",y,"next player = ",nextplayer)
-                cells.playerIndex=nextplayer
+            if not (tmpx==x and tmpy==y)and cells.played==False :
+                # cells.playerIndex=nextplayer
+                print(" x=",x,"y=",y)
                 cells.x=x
                 cells.y=y
                 cells.execute()
             cells.played=False
-            tmp=nextplayer
-            skip=False
+            tmpx=x
+            tmpy=y
 
     def server_start():
         server_run()

@@ -369,7 +369,7 @@ class Grid:
                 
             self.checkstatus()
 
-            # self.playerIndex += 1
+            self.playerIndex += 1
 
             if self.playerIndex > self.player_number-1:
                 self.playerIndex = 1

@@ -3,8 +3,9 @@ import tkinter as tk
 from tkinter import Frame, ttk
 from network import *
 from _thread import *
+from chainRxa2 import call_join_start
 
-def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_style):
+def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_style,mainScreen,home_page,isHost):
 
     # player_number, grid_size = int(player_number) + 1, int(grid_size)
     # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
@@ -16,6 +17,9 @@ def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_s
 
     # def back_function():
     #     mainScreen(root, home_page, image_frame, button_style)
+    def start():
+        call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, 3, grid_size, button_style,isHost,ipaddress.get())
+
 
     widget_destroy(root)
     image_frame()
@@ -43,7 +47,7 @@ def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_s
     
     # print(ip_entry.focus_get())
     
-    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=lambda: print(f"{ipaddress.get()}"))
+    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=start )
     submit_button.grid(column=1, row=1, padx=5, pady=5, sticky=tk.W)
 
     back_button = ttk.Button(new_frame, text='Back', style="W.TButton", command=local_page)
@@ -70,4 +74,5 @@ def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_s
     #     n=Network()
 
     # start_new_thread(client,())
+    
     root.mainloop()

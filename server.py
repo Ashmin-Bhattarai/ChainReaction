@@ -2,7 +2,6 @@ import socket
 from _thread import *
 import pickle
 import pygame
-from network import *
 import sys
 def server_run():
     hostname=socket.gethostname()

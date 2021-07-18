@@ -16,15 +16,12 @@ class Grid(explode.Explode):
         self.playerIndex = 1
         self.firstTime = True
         self.deletedPlayer = 0
-<<<<<<< HEAD
-=======
         self.played=False
         self.x=-1
         self.y=-1
 
         
 
->>>>>>> test1
 
         
 
@@ -205,6 +202,7 @@ class Grid(explode.Explode):
                 print(num)
                 if ballNum[num] == 0:
                     self.players.pop(num)
+                    print("chekpoint checkstatus")
                     self.player_number -= 1
                     
                     for i in range(0, self.size):
@@ -221,11 +219,7 @@ class Grid(explode.Explode):
                 self.c.delete("all")
                 string="Player %a Won the Game !!"%(self.players[1].name)                
                 self.c.create_text((self.w+len(string))//2,(self.h/2)-50,font="Arial 40 bold", fill=self.players[1].color, text=string)
-<<<<<<< HEAD
-            
-=======
                   
->>>>>>> test1
             
     def play_sound(self, filename):
         PlaySound(filename, SND_FILENAME)
@@ -238,11 +232,7 @@ class Grid(explode.Explode):
         #print(self.x, self.y)
     def execute(self):
         if self.isvalid(self.x, self.y):
-<<<<<<< HEAD
-
-=======
             self.played=True
->>>>>>> test1
             self.cells[self.x][self.y][0] += 1
             self.cells[self.x][self.y][1] = self.player
             self.cord_list = [[self.x, self.y]]
@@ -271,13 +261,15 @@ class Grid(explode.Explode):
             
                 
             self.checkstatus()
-
+            print("before")
             self.playerIndex += 1
-
-            if self.playerIndex > self.player_number-1:
+            print("player index=",self.playerIndex,"player number=",self.player_number)
+            print("after")
+            if self.playerIndex > (self.player_number-1):
                 self.playerIndex = 1
                 self.firstTime = False
             self.player = self.players[self.playerIndex].id
+            print("player=",self.player,"player index=",self.playerIndex)
             if len(self.players) !=2:
                 self.grid()
             #if play:

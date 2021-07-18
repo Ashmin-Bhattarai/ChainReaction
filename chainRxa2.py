@@ -56,11 +56,9 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     c.bind('<Configure>', cells.grid)
     c.bind('<Button-1>', cells.numbering)
     root.mainloop()
-<<<<<<< HEAD
-=======
 
 
-def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style,isHost):
+def call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style,isHost,ipaddress):
        
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
@@ -102,6 +100,8 @@ def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_n
         tmpx=-1
         tmpy=-1
         n=Network()
+        n.server=ipaddress
+        n.connect()
         clock=pygame.time.Clock()
         while True:      
             clock.tick(60)      
@@ -127,4 +127,3 @@ def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_n
 
     start_new_thread(client,())
     root.mainloop()
->>>>>>> test1

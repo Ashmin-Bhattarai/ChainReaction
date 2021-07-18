@@ -32,9 +32,7 @@ class Grid:
         # Creates all horizontal lines
         for i in range(0, self.h, self.yd):
             horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.players[self.playerIndex].color)
-        
-
-
+    
         # display text
         for i in range(self.size):
             for j in range(self.size):
@@ -47,40 +45,11 @@ class Grid:
 
 
     def removeCircles(self, x, y):
-        ballSize = 20 - self.size
+    
+        
+        self.c.create_rectangle((self.xd * x) + 5, (self.yd * y) + 5, (self.xd * x) + (self.xd - 5), (self.yd * y) + (self.yd - 5),
+                                fill = "#ffffff", outline = "#ffffff")
 
-        if self.cells[x][y][0] == 1:
-            x1, y1 = (self.xd * x + self.xd/2 - ballSize), (self.yd * y + self.yd/2 - ballSize)
-            x2, y2 = (self.xd * x + self.xd/2 + ballSize), (self.yd * y + self.yd/2 + ballSize)
-            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
-            self.c.update()
-
-        elif self.cells[x][y][0] == 2:
-            x1, y1 = (self.xd * x + self.xd/2 - ballSize*2), (self.yd * y + self.yd/2 - ballSize)
-            x2, y2 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2 + ballSize)
-            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
-            self.c.update()
-
-            x1, y1 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2 - ballSize)
-            x2, y2 = (self.xd * x + self.xd/2 + ballSize*2), (self.yd * y + self.yd/2 + ballSize)
-            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
-            self.c.update()
-
-        elif self.cells[x][y][0] == 3:
-            x1, y1 = (self.xd * x + self.xd/2 - ballSize*2), (self.yd * y + self.yd/2)
-            x2, y2 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2 + ballSize*2)
-            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
-            self.c.update()
-
-            x1, y1 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2)
-            x2, y2 = (self.xd * x + self.xd/2 + ballSize*2), (self.yd * y + self.yd/2 + ballSize*2)
-            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
-            self.c.update()
-
-            x1, y1 = (self.xd * x + self.xd/2 - ballSize), (self.yd * y + self.yd/2 - ballSize*2)
-            x2, y2 = (self.xd * x + self.xd/2 + ballSize), (self.yd * y + self.yd/2)
-            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
-            self.c.update()
 
     
     def drawCircles(self, x, y):
@@ -125,8 +94,11 @@ class Grid:
         x = self.cord_list[0][0]
         y = self.cord_list[0][1]
         
+        self.removeCircles(x, y)
+        
         #Upper Left Corner
         if x == 0 and y == 0 and self.cells[x][y][0] >= 2:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 2
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -145,7 +117,8 @@ class Grid:
 
         #Upper Right Corner
         elif x == self.size-1 and y == 0 and self.cells[x][y][0] >= 2:
-            print("ENter")
+            
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 2
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -164,6 +137,7 @@ class Grid:
             # explode(x, y + 1)
 
         elif x == 0 and y == self.size-1 and self.cells[x][y][0] >= 2:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 2
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -182,6 +156,7 @@ class Grid:
             # explode(x, y - 1)
 
         elif x == self.size-1 and y == self.size-1 and self.cells[x][y][0] >= 2:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 2
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -200,6 +175,7 @@ class Grid:
             # explode(x, y - 1)
 
         elif x == 0 and y in range(1, self.size-1) and self.cells[x][y][0] >= 3:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 3
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -226,6 +202,7 @@ class Grid:
             # explode(x, y + 1)
 
         elif x == self.size-1 and y in range(1, self.size-1) and self.cells[x][y][0] >= 3:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 3
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -252,6 +229,7 @@ class Grid:
             # explode(x, y - 1)
 
         elif y == 0 and x in range(1, self.size-1) and self.cells[x][y][0] >= 3:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 3
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -278,6 +256,7 @@ class Grid:
             # explode(x, y + 1)
 
         elif y == self.size-1 and x in range(1, self.size-1) and self.cells[x][y][0] >= 3:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 3
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0
@@ -304,6 +283,7 @@ class Grid:
             # explode(x, y - 1)
 
         elif x in range(1, self.size-1) and y in range(1, self.size-1) and self.cells[x][y][0] >= 4:
+            
             self.cells[x][y][0] = self.cells[x][y][0] - 4
             if self.cells[x][y][0] == 0:
                 self.cells[x][y][1] = 0

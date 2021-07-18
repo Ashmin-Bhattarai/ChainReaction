@@ -85,7 +85,7 @@ def call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, pl
     ttk.Separator(orient='horizontal').pack()
 
     players = []
-    for i in range(0, player_number):
+    for i in range(0, 3):
         players.append(Player(i, colors[i]))
 
     c = tk.Canvas(root, height=root.winfo_height(),

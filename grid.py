@@ -196,7 +196,7 @@ class Grid(explode.Explode):
                 for y in range(0, self.size):
                     ballNum[self.cells[x][y][1]] = ballNum[self.cells[x][y][1]] + self.cells[x][y][0]
                     #print(ballNum[self.cells[x][y][1]], self.cells[x][y][1], self.cells[x][y][0])
-            #print(ballNum)
+            print(ballNum)
             
             for num in range(1, len(ballNum)):
                 print(num)

@@ -1,5 +1,5 @@
 from tkinter.constants import RADIOBUTTON
-from chainRxa2 import call_this,call_join
+from chainRxa2 import call_this
 import tkinter as tk
 from tkinter import ttk
 

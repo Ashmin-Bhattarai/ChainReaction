@@ -109,6 +109,7 @@ class Grid:
 
             self.cord_list.append([x + 1, y])
             self.cord_list.append([x, y + 1])
+            
 
         #Upper Right Corner
         elif x == self.size-1 and y == 0 and self.cells[x][y][0] >= 2:
@@ -336,15 +337,6 @@ class Grid:
                 self.c.delete("all")
                 string="Player %a Won the Game !!"%(self.players[1].name)                
                 self.c.create_text((self.w+len(string))//2,(self.h/2)-50,font="Arial 40 bold", fill=self.players[1].color, text=string)
-
-
-                
-            
-                    
-    
-                
-            
-            
             
             
     def play_sound(self, filename):

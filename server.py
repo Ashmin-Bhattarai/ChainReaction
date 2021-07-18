@@ -3,6 +3,7 @@ from _thread import *
 import pickle
 import pygame
 from network import *
+import sys
 def server_run():
     hostname=socket.gethostname()
     ipaddress=socket.gethostbyname(hostname)
@@ -33,16 +34,19 @@ def server_run():
                 # print(playerindex,x,y,played)
                 # playerChange=False
                 if Tplayed==True:
-                    playerChange=True
                     playerindex=Tplayerindex
                     playerindex+=1
                     x=Tx
                     y=Ty
-                else:
-                    playerChange=False
-                conn.sendall(pickle.dumps([playerindex,x,y,playerChange]))
+                conn.sendall(pickle.dumps([playerindex,x,y]))
             except socket.error as e:
-                print (e)
+                print("disconnected")
+                run=False
+        playerindex=x=y=-1
+        played=False
+        playerChange=False
+        conn.close()
+        sys.exit() 
 
     while True:
         conn,addr=s.accept()

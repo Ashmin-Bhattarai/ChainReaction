@@ -16,6 +16,15 @@ class Grid(explode.Explode):
         self.playerIndex = 1
         self.firstTime = True
         self.deletedPlayer = 0
+<<<<<<< HEAD
+=======
+        self.played=False
+        self.x=-1
+        self.y=-1
+
+        
+
+>>>>>>> test1
 
         
 
@@ -212,7 +221,11 @@ class Grid(explode.Explode):
                 self.c.delete("all")
                 string="Player %a Won the Game !!"%(self.players[1].name)                
                 self.c.create_text((self.w+len(string))//2,(self.h/2)-50,font="Arial 40 bold", fill=self.players[1].color, text=string)
+<<<<<<< HEAD
             
+=======
+                  
+>>>>>>> test1
             
     def play_sound(self, filename):
         PlaySound(filename, SND_FILENAME)
@@ -221,11 +234,15 @@ class Grid(explode.Explode):
         #global player, cells, cord_list
         self.x = int(event.x / (self.w//self.size))
         self.y = int(event.y / (self.h//self.size))
-
+        self.execute()
         #print(self.x, self.y)
-
+    def execute(self):
         if self.isvalid(self.x, self.y):
+<<<<<<< HEAD
 
+=======
+            self.played=True
+>>>>>>> test1
             self.cells[self.x][self.y][0] += 1
             self.cells[self.x][self.y][1] = self.player
             self.cord_list = [[self.x, self.y]]

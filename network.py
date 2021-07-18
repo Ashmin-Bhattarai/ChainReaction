@@ -6,15 +6,19 @@ class Network:
         self.client=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
         hostname=socket.gethostname()
         ipaddress=socket.gethostbyname(hostname)
-        print(ipaddress)
         self.server=ipaddress
         self.port=5555
         self.addr=(self.server,self.port)
-        self.client.connect(self.addr)
+        self.connect()
+
+    def connect(self):
+        try:
+            self.client.connect(self.addr)
+        except ConnectionRefusedError:
+            print ("Server is OFFLINE !!!")
 
     def initial_data(self):
         try:
-
             print("Fetching initial data...")
             return pickle.loads(self.client.recv(8192))
         except socket.error as e:

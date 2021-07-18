@@ -18,7 +18,8 @@ button_style.theme_use('clam')
 button_style.configure('W.TButton', **font)
 button_style.configure('W.TCheckbutton', **font)
 button_style.configure('W.TLabel', **font)
-button_style.configure('W.TCombobox', **font)
+button_style.configure('W.TLabel', **font)
+button_style.configure('W.TEntry', **font)
 button_style.map('W.TButton', background=[('active', '#00FABC')])
 
 def image_frame():

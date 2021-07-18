@@ -1,8 +1,10 @@
 from winsound import *
 import tkinter as tk
 import time
+import explode
+import threading
 
-class Grid:
+class Grid(explode.Explode):
     def __init__(self, size, c, players, player_number):
         self.size = size
         self.c = c
@@ -37,25 +39,14 @@ class Grid:
             
     
         #display text
-        for i in range(self.size):
-            for j in range(self.size):
-                x = i * self.xd + self.xd//2
-                y = j * self.yd + self.yd//2
+        # for i in range(self.size):
+        #     for j in range(self.size):
+        #         x = i * self.xd + self.xd//2
+        #         y = j * self.yd + self.yd//2
 
-                self.c.create_text(x, y, fill=self.fill_color, text=str(self.cells[i][j][0]))
-                #self.drawCircles(i, j)
+        #         self.c.create_text(x, y, fill=self.fill_color, text=str(self.cells[i][j][0]))
+        #         #self.drawCircles(i, j)
 
-
-    # def removeCircles(self, x, y):
-    
-        
-    #     self.c.create_rectangle((self.xd * x) + 5, (self.yd * y) + 5, (self.xd * x) + (self.xd - 5), (self.yd * y) + (self.yd - 5),
-    #                             fill = "#ffffff", outline = "#ffffff")
-
-
-    # def createCircles(self, x, y):
-    #     pass
- 
    
     def drawCircles(self, x, y):
         ballSize = 20 - self.size
@@ -128,10 +119,7 @@ class Grid:
             x2, y2 = (self.xd * x + self.xd/2 + ballSize), (self.yd * y + self.yd/2 + ballSize*4)
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag+ '4')
             self.c.update()
-            
-            
-    
-        
+                    
     
     def animate_corner(self, tag, x1, y1, x2, y2):
         print("Inside animate")
@@ -194,310 +182,6 @@ class Grid:
             #self.c.after(2, move_circle)
         move_circle()
             
-        
-    
-    def explode(self):
-        global cord_list
-        x = self.cord_list[0][0]
-        y = self.cord_list[0][1]
-        print (x, y)
-        # self.removeCircles(x, y)
-        tag = "circle_" + str(x) + "_" + str(y) + "_"
-        
-        #Upper Left Corner
-        if x == 0 and y == 0 and self.cells[x][y][0] >= 2:
-            print("satisfy")
-            self.animate_corner(tag, 1, 0, 0, 1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y + 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            
-            self.drawCircles(x+1, y)
-            self.drawCircles(x, y+1)
-            
-            
-        #Upper Right Corner
-        elif x == self.size-1 and y == 0 and self.cells[x][y][0] >= 2:
-            
-            self.animate_corner(tag, -1, 0, 0, 1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y + 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            
-            self.drawCircles(x-1, y)
-            self.drawCircles(x, y+1)
-            # explode(x - 1, y)
-            # explode(x, y + 1)
-
-        #lower left corner
-        elif x == 0 and y == self.size-1 and self.cells[x][y][0] >= 2:
-            self.animate_corner(tag, 1, 0, 0, -1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y - 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            
-            self.drawCircles(x+1, y)
-            self.drawCircles(x, y-1)
-            # explode(x + 1, y)
-            # explode(x, y - 1)
-        #lower right corner
-        elif x == self.size-1 and y == self.size-1 and self.cells[x][y][0] >= 2:
-            self.animate_corner(tag, -1, 0, 0, -1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 2
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y - 1])
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            
-            self.drawCircles(x-1, y)
-            self.drawCircles(x, y-1)
-            # explode(x - 1, y)
-            # explode(x, y - 1)
-
-        #left edge
-        elif x == 0 and y in range(1, self.size-1) and self.cells[x][y][0] >= 3:
-            self.animate_edge(tag, 0, 1, 1, 0, 0, -1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y - 1])
-            self.cord_list.append([x, y + 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            self.c.delete(tag+'3')
-            
-            self.drawCircles(x+1, y)
-            self.drawCircles(x, y-1)
-            self.drawCircles(x, y+1)
-            # explode(x + 1, y)
-            # explode(x, y - 1)
-            # explode(x, y + 1)
-
-        #right edge
-        elif x == self.size-1 and y in range(1, self.size-1) and self.cells[x][y][0] >= 3:
-            self.animate_edge(tag, -1, 0, 0, 1, 0, -1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y - 1])
-            self.cord_list.append([x, y + 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            self.c.delete(tag+'3')
-            
-            self.drawCircles(x-1, y)
-            self.drawCircles(x, y-1)
-            self.drawCircles(x, y+1)
-            # explode(x - 1, y)
-            # explode(x, y + 1)
-            # explode(x, y - 1)
-
-        #upper edge
-        elif y == 0 and x in range(1, self.size-1) and self.cells[x][y][0] >= 3:
-            self.animate_edge(tag, -1, 0, 1, 0, 0, 1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y + 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            self.c.delete(tag+'3')
-            
-            self.drawCircles(x+1, y)
-            self.drawCircles(x-1, y)
-            self.drawCircles(x, y+1)
-            # explode(x + 1, y)
-            # explode(x - 1, y)
-            # explode(x, y + 1)
-
-        #lower edge
-        elif y == self.size-1 and x in range(1, self.size-1) and self.cells[x][y][0] >= 3:
-            self.animate_edge(tag, -1, 0, 1, 0, 0, -1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 3
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x, y - 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            self.c.delete(tag+'3')
-            
-            self.drawCircles(x-1, y)
-            self.drawCircles(x+1, y)
-            self.drawCircles(x, y-1)
-            # explode(x - 1, y)
-            # explode(x + 1, y)
-            # explode(x, y - 1)
-        #middle
-        elif x in range(1, self.size-1) and y in range(1, self.size-1) and self.cells[x][y][0] >= 4:
-            self.animate_middle(tag, -1, 0, 1, 0, 0, -1, 0, 1)
-            self.cells[x][y][0] = self.cells[x][y][0] - 4
-            if self.cells[x][y][0] == 0:
-                self.cells[x][y][1] = 0
-            else:
-                self.cells[x][y][1] = self.player
-
-            # right cell
-            self.cells[x + 1][y][0] += 1
-            self.cells[x + 1][y][1] = self.player
-
-            # left cell
-            self.cells[x - 1][y][0] += 1
-            self.cells[x - 1][y][1] = self.player
-
-            # up cell
-            self.cells[x][y - 1][0] += 1
-            self.cells[x][y - 1][1] = self.player
-
-            # down cell
-            self.cells[x][y + 1][0] += 1
-            self.cells[x][y + 1][1] = self.player
-
-            self.cord_list.append([x + 1, y])
-            self.cord_list.append([x - 1, y])
-            self.cord_list.append([x, y - 1])
-            self.cord_list.append([x, y + 1])
-            
-            self.c.delete(tag+'1')
-            self.c.delete(tag+'2')
-            self.c.delete(tag+'3')
-            self.c.delete(tag+'4')
-            
-            self.drawCircles(x+1, y)
-            self.drawCircles(x-1, y)
-            self.drawCircles(x, y-1)
-            self.drawCircles(x, y+1)
-            # explode(x + 1, y)
-            # explode(x - 1, y)
-            # explode(x, y - 1)
-            # explode(x, y + 1)
-
-        self.cord_list = self.cord_list[1:]
-        # if len(cord_list) != 0:
-        #     print("x,y, v = ", x, y, cells[x][y][0])
-        #     explode()
     
     def checkstatus(self):
         ballNum = [0 for _ in self.players]
@@ -550,11 +234,24 @@ class Grid:
             
             self.drawCircles(self.x, self.y)
             self.explode()
+            
             play = False
+            
+            # def test():
+            #     self.explode()
+            
+            # thread = []
+            # i=0
             while len(self.cord_list) != 0:
-                self.explode()
-                play = True
+                # thread.append(threading.Thread(target = test))
+                # thread[i].start()
+                # i += 1
+                 self.explode()
+                 play = True
                 # self.play_sound('soundeffects/explode.wav')
+            # for t in thread:
+            #     t.join()
+            
                 
             self.checkstatus()
 

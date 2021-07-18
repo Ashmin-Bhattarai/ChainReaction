@@ -2,7 +2,6 @@ from offline_screen import *
 import tkinter as tk
 from tkinter import ttk
 from PIL import ImageTk, Image
-
 root = tk.Tk()
 root.title('Chain Reaction')
 root.geometry("800x800")
@@ -49,16 +48,12 @@ def local_page():
     image_frame()
     button_frame = ttk.Frame(root)
     button_frame.place(x=360, y=500)
-    host_button = ttk.Button(button_frame, text="Back to Home",
-                             style='W.TButton', command=home_page)
-    host_button.grid(column=0, row=0, sticky=tk.W)
     host_button = ttk.Button(button_frame, text="Host",
-                             style='W.TButton', command=home_page)
+                             style='W.TButton', command=lambda: join_page(True))
     host_button.grid(column=0, row=0, sticky=tk.W)
     join_button = ttk.Button(button_frame, text="Join",
-                             style='W.TButton', command=join_page)
+                             style='W.TButton', command=lambda: join_page(False))
     join_button.grid(column=0, row=1, sticky=tk.W)
-
     root.mainloop()
 
 
@@ -79,9 +74,9 @@ def offline_page():
     widget_destroy(root)
     mainScreen(root, home_page, image_frame, button_style)
 
-def join_page():
+def join_page(isHost):
     widget_destroy(root)
-    call_join(root, mainScreen, widget_destroy, home_page, image_frame, "2", "8", button_style)
+    call_join(root, mainScreen, widget_destroy, home_page, image_frame, "2", "8", button_style,isHost)
 
 if __name__ == "__main__":
     home_page()

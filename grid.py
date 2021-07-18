@@ -13,6 +13,10 @@ class Grid:
         self.playerIndex = 1
         self.firstTime = True
         self.deletedPlayer = 0
+        self.played=False
+        self.x=-1
+        self.y=-1
+
         
 
 
@@ -336,16 +340,7 @@ class Grid:
                 self.c.delete("all")
                 string="Player %a Won the Game !!"%(self.players[1].name)                
                 self.c.create_text((self.w+len(string))//2,(self.h/2)-50,font="Arial 40 bold", fill=self.players[1].color, text=string)
-
-
-                
-            
-                    
-    
-                
-            
-            
-            
+                  
             
     def play_sound(self, filename):
         PlaySound(filename, SND_FILENAME)
@@ -354,10 +349,11 @@ class Grid:
         #global player, cells, cord_list
         self.x = int(event.x / (self.w//self.size))
         self.y = int(event.y / (self.h//self.size))
-
+        self.execute()
         #print(self.x, self.y)
-
+    def execute(self):
         if self.isvalid(self.x, self.y):
+            self.played=True
             self.cells[self.x][self.y][0] += 1
             self.cells[self.x][self.y][1] = self.player
             #print(self.cells[self.x][self.y])
@@ -373,7 +369,7 @@ class Grid:
                 
             self.checkstatus()
 
-            self.playerIndex += 1
+            # self.playerIndex += 1
 
             if self.playerIndex > self.player_number-1:
                 self.playerIndex = 1

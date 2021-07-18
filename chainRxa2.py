@@ -1,8 +1,10 @@
+import pygame
 from grid import Grid
 import tkinter as tk
 from tkinter import ttk
 from network import *
 from _thread import *
+from server import *
 player = 1
 
 # cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
@@ -56,7 +58,7 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     root.mainloop()
 
 
-def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style):
+def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style,isHost):
        
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
@@ -94,7 +96,26 @@ def call_join(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     c.bind('<Button-1>', cells.numbering)
 
     def client():
+        print("Client thread started:")
         n=Network()
+        clock=pygame.time.Clock()
+        while True:      
+            clock.tick(60)      
+            nextplayer,x,y,playerChange=n.send([cells.playerIndex,cells.x,cells.y,cells.played])    
+            cells.played=False
+            if playerChange==True:
+                print("player changed: x=",x,"y=",y,"next player = ",nextplayer)
+                # cells.playerIndex=nextplayer
+                # cells.x=x
+                # cells.y=y
+                # cells.execute()
+
+    def server_start():
+        server_run()
+
+
+    if isHost==True:
+        start_new_thread(server_start,())
 
 
     start_new_thread(client,())

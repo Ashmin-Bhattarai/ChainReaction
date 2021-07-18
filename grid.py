@@ -16,8 +16,6 @@ class Grid:
         
 
 
-
-
     def grid(self, event=None):
         #global player, colors, cells
         self.w = self.c.winfo_width()  # Get current width of canvas
@@ -26,7 +24,7 @@ class Grid:
         self.xd = self.w//self.size
         self.yd = self.h//self.size
 
-        self.c.delete('all')
+        #self.c.delete('all')
 
         # Creates all vertical lines
         for i in range(0, self.w, self.xd):
@@ -48,6 +46,41 @@ class Grid:
                 self.drawCircles(i, j)
 
 
+    def removeCircles(self, x, y):
+        ballSize = 20 - self.size
+
+        if self.cells[x][y][0] == 1:
+            x1, y1 = (self.xd * x + self.xd/2 - ballSize), (self.yd * y + self.yd/2 - ballSize)
+            x2, y2 = (self.xd * x + self.xd/2 + ballSize), (self.yd * y + self.yd/2 + ballSize)
+            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
+            self.c.update()
+
+        elif self.cells[x][y][0] == 2:
+            x1, y1 = (self.xd * x + self.xd/2 - ballSize*2), (self.yd * y + self.yd/2 - ballSize)
+            x2, y2 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2 + ballSize)
+            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
+            self.c.update()
+
+            x1, y1 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2 - ballSize)
+            x2, y2 = (self.xd * x + self.xd/2 + ballSize*2), (self.yd * y + self.yd/2 + ballSize)
+            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
+            self.c.update()
+
+        elif self.cells[x][y][0] == 3:
+            x1, y1 = (self.xd * x + self.xd/2 - ballSize*2), (self.yd * y + self.yd/2)
+            x2, y2 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2 + ballSize*2)
+            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
+            self.c.update()
+
+            x1, y1 = (self.xd * x + self.xd/2), (self.yd * y + self.yd/2)
+            x2, y2 = (self.xd * x + self.xd/2 + ballSize*2), (self.yd * y + self.yd/2 + ballSize*2)
+            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
+            self.c.update()
+
+            x1, y1 = (self.xd * x + self.xd/2 - ballSize), (self.yd * y + self.yd/2 - ballSize*2)
+            x2, y2 = (self.xd * x + self.xd/2 + ballSize), (self.yd * y + self.yd/2)
+            self.c.create_oval(x1, y1, x2, y2, fill="white", outline= "white")
+            self.c.update()
 
     
     def drawCircles(self, x, y):
@@ -86,7 +119,6 @@ class Grid:
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color)
             self.c.update()
     
-
 
     def explode(self):
         global cord_list
@@ -350,6 +382,7 @@ class Grid:
         #print(self.x, self.y)
 
         if self.isvalid(self.x, self.y):
+            self.removeCircles(self.x, self.y)
             self.cells[self.x][self.y][0] += 1
             self.cells[self.x][self.y][1] = self.player
             #print(self.cells[self.x][self.y])

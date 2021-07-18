@@ -25,13 +25,25 @@ def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_s
 
     ip_label = ttk.Label(new_frame, style='W.TLabel', text="IP Address:")
     ip_label.grid(column=0, row=0, padx=5, sticky=tk.W)
+    
+    
 
-    ipaddress = tk.StringVar(value='192.168.000.000')
+    ipaddress = tk.StringVar()
     # ipaddress.set("192.168.000.000")
     ip_entry = ttk.Entry(new_frame, textvariable=ipaddress, style='W.TEntry', width=30)
     ip_entry.grid(column=1, row=0, sticky=tk.W)
+    
+    def focus_in(*args):
+        ip_entry.delete(0, 'end')
+        
 
-    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=local_page)
+    
+    ip_entry.bind("<FocusIn>",focus_in)
+    ip_entry.insert(0, 'Enter IP address')
+    
+    # print(ip_entry.focus_get())
+    
+    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=lambda: print(f"{ipaddress.get()}"))
     submit_button.grid(column=1, row=1, padx=5, pady=5, sticky=tk.W)
 
     back_button = ttk.Button(new_frame, text='Back', style="W.TButton", command=local_page)

@@ -58,7 +58,7 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
 
 
 def call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, player_number, grid_size, button_style, isHost, ipaddress):
-
+    print("call_join_start ip address=",ipaddress)
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
 

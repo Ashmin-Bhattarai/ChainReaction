@@ -15,6 +15,7 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
 
     def start():
         # print(selected_playersize, selected_gridSize)
+        print("from start=",ipaddress)
         call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, selected_playersize, selected_gridSize, button_style, isHost, ipaddress)
 
     widget_destroy(root)
@@ -37,7 +38,7 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
         ip_label = ttk.Label(new_frame, style='W.TLabel', text=text)
         ip_label.grid(column=0, row=0, padx=5, sticky=tk.N)
 
-        ipaddress = tk.StringVar()
+        ipaddr = tk.StringVar()
         ip_entry = ttk.Entry(new_frame, textvariable=ipaddress, style='W.TEntry', width=30)
         ip_entry.grid(column=1, row=0, sticky=tk.W)
 
@@ -46,7 +47,7 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
 
         ip_entry.bind("<FocusIn>", focus_in)
         ip_entry.insert(0, 'Enter IP address')
-        ipaddress = ipaddress.get()
+        ipaddress = ipaddr.get()
 
     else:
         text = f'Your IP Address is: {ipaddress}'
@@ -84,5 +85,4 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
 
     back_button = ttk.Button(new_frame, text='Back', style="W.TButton", command=local_page)
     back_button.grid(column=1, row=3, padx=5, pady=5, sticky=tk.E)
-
     root.mainloop()

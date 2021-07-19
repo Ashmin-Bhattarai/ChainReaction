@@ -5,9 +5,8 @@ import threading
 
 
 class Grid(explode.Explode):
-    def __init__(self, size, c, players, player_number):
+    def __init__(self, size, players, player_number):
         self.size = size
-        self.c = c
         self.player = 1
         self.cord_list = []
         self.cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
@@ -19,7 +18,8 @@ class Grid(explode.Explode):
         self.played = False
         self.x = -1
         self.y = -1
-
+    def set_c(self,c):
+        self.c=c
     def grid(self, event=None):
         #global player, colors, cells
         self.w = self.c.winfo_width()  # Get current width of canvas

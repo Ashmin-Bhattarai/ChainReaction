@@ -13,10 +13,12 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
 
-    def start():
+    def start(ip):
         # print(selected_playersize, selected_gridSize)
-        print("from start=",ipaddress)
-        call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, selected_playersize, selected_gridSize, button_style, isHost, ipaddress)
+        if len(ip)==0:
+            ip=ipaddress
+        print("from start=",ip)
+        call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, selected_playersize, selected_gridSize, button_style, isHost, ip)
 
     widget_destroy(root)
     image_frame()
@@ -32,22 +34,24 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
     def total_grid(event):
         global selected_gridSize
         selected_gridSize = grid_size.get()
-
+    ipaddr = tk.StringVar()
     if not isHost:
 
         ip_label = ttk.Label(new_frame, style='W.TLabel', text=text)
         ip_label.grid(column=0, row=0, padx=5, sticky=tk.N)
 
-        ipaddr = tk.StringVar()
-        ip_entry = ttk.Entry(new_frame, textvariable=ipaddress, style='W.TEntry', width=30)
+        # ipaddr = tk.StringVar()
+    # ipaddress.set("192.168.000.000")
+        ip_entry = ttk.Entry(new_frame, textvariable=ipaddr, style='W.TEntry', width=30)
         ip_entry.grid(column=1, row=0, sticky=tk.W)
-
+        
         def focus_in(*args):
-            ip_entry.delete(0, 'end')
+            ip_entry.delete(0, 'end')      
 
-        ip_entry.bind("<FocusIn>", focus_in)
+        
+        ip_entry.bind("<FocusIn>",focus_in)
         ip_entry.insert(0, 'Enter IP address')
-        ipaddress = ipaddr.get()
+        # ipaddress = ipaddr.get()
 
     else:
         text = f'Your IP Address is: {ipaddress}'
@@ -80,7 +84,7 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
         for widget in new_frame.winfo_children():
             widget.grid(padx=5, pady=3)
 
-    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=start)
+    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=lambda:start(ipaddr.get()))
     submit_button.grid(column=0, row=3, padx=5, pady=5, sticky=tk.W)
 
     back_button = ttk.Button(new_frame, text='Back', style="W.TButton", command=local_page)

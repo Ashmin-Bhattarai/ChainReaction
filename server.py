@@ -6,11 +6,12 @@ import sys
 
 
 def server_run():
+
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
     server = ipaddress
-    port = 5555
-    # port = 25565
+    port = 25565
+    # port = 5555
     print(server)
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

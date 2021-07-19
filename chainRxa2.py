@@ -99,7 +99,7 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
         n.connect()
         clock = pygame.time.Clock()
         while True:
-            clock.tick(60)
+            clock.tick(10)
             x, y = n.send([cells.x, cells.y, cells.played])
 
             if not (tmpx == x and tmpy == y) and cells.played == False:

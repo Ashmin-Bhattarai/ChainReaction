@@ -9,8 +9,9 @@ def server_run():
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
     server = ipaddress
-    port = 25565
-    #change
+    port = 5555
+    # port = 25565
+    print(server)
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

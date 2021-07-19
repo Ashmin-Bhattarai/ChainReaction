@@ -12,9 +12,9 @@ def widget_destroy(root):
         widgets.destroy()
 
 
-def join_start(root, home_page, image_frame, button_style):
-    call_join(root, mainScreen, widget_destroy, home_page, image_frame,
-              selectedPlayer, selectedGridSize, button_style)
+# def join_start(root, home_page, image_frame, button_style):
+#     call_join(root, mainScreen, widget_destroy, home_page, image_frame,
+#               selectedPlayer, selectedGridSize, button_style)
 
 def mainScreen(root, home_page, image_frame, button_style):
 
@@ -32,6 +32,7 @@ def mainScreen(root, home_page, image_frame, button_style):
         call_this(root, mainScreen, widget_destroy, home_page, image_frame,
                   selectedPlayer, selectedGridSize, button_style)
 
+    widget_destroy(root)
     image_frame()
     player_seclection_frame = ttk.Frame(
         root, relief='raised', borderwidth=2)

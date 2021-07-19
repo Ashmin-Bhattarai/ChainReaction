@@ -15,18 +15,18 @@ img = ImageTk.PhotoImage(Image.open("mainMenu.jpg"))
 
 button_style = ttk.Style()
 button_style.theme_use('clam')
-button_style.configure('W.TButton', **font)
-button_style.configure('W.TCheckbutton', **font)
-button_style.configure('W.TLabel', **font)
-button_style.configure('W.TLabel', **font)
-button_style.configure('W.TEntry', **font)
+
+for style in ['W.TButton', 'W.TCheckbutton', 'W.TLabel', 'W.TEntry']:
+    # if style == 'W.TLabel':
+    #     font = {'font': ('Arial', 10, 'bold')}
+    button_style.configure(style, **font)
+
 button_style.map('W.TButton', background=[('active', '#00FABC')])
 
 
 def image_frame():
     main_image_frame = ttk.Label(root, image=img)
     main_image_frame.place(x=0, y=0, relwidth=1, relheight=1)
-    main_image_frame.image = img
 
 
 def home_page():
@@ -86,9 +86,9 @@ def offline_page():
 
 
 def join_page(isHost):
-    widget_destroy(root)
+    # widget_destroy(root)
     # call_join(root, mainScreen, widget_destroy, home_page, image_frame, "2", "8", button_style,isHost)
-    call_join(root, local_page, widget_destroy, image_frame, "8", button_style, mainScreen, home_page, isHost)
+    call_join(root, local_page, widget_destroy, image_frame, button_style, home_page, isHost)
 
 
 if __name__ == "__main__":

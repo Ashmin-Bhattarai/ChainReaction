@@ -7,9 +7,9 @@ from _thread import *
 from server import *
 player = 1
 
-# cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
 colors = ["#000000", "#00FF00", "#00FFFF", "#FF0000",
-          "#0000FF", "#FF00FF", "#FFCCAA", "#AACCFF", "#FFFF00"]
+          "#0000FF", "#FF00FF", "#FFCCAA", "#AACCFF",
+          "#FFFF00"]
 
 
 class Player:
@@ -33,14 +33,13 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
 
     button_frame = ttk.Frame(root)
     button_frame.pack(fill='both')
-    # button_frame.columnconfigure(0, weight=40)
+
     newgame_button = ttk.Button(
         button_frame, text='New Game', style='W.TButton', command=newgame_function)
     back_button = ttk.Button(button_frame, text='Back',
                              style='W.TButton', command=back_function)
     newgame_button.grid(column=0, row=0, padx=5, sticky=tk.EW)
     back_button.grid(column=1, row=0, padx=5, sticky=tk.EW)
-    # cells = Grid(size, c, players, colors, player_number)
 
     ttk.Separator(orient='horizontal').pack()
 
@@ -58,34 +57,30 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     root.mainloop()
 
 
-def call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style, isHost, ipaddress):
+def call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, player_number, grid_size, button_style, isHost, ipaddress):
 
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
 
     def newgame_function():
         widget_destroy(root)
-        call_this(root, mainScreen, widget_destroy, home_page, image_frame,
-                  player_number - 1, grid_size, button_style)
+        call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, player_number - 1, grid_size, button_style, isHost, ipaddress)
 
     def back_function():
-        mainScreen(root, home_page, image_frame, button_style)
+        call_join(root, local_page, widget_destroy, image_frame, button_style, home_page, isHost)
 
     button_frame = ttk.Frame(root)
     button_frame.pack(fill='both')
-    # button_frame.columnconfigure(0, weight=40)
-    newgame_button = ttk.Button(
-        button_frame, text='New Game', style='W.TButton', command=newgame_function)
-    back_button = ttk.Button(button_frame, text='Back',
-                             style='W.TButton', command=back_function)
-    newgame_button.grid(column=0, row=0, padx=5, sticky=tk.EW)
-    back_button.grid(column=1, row=0, padx=5, sticky=tk.EW)
-    # cells = Grid(size, c, players, colors, player_number)
+
+    newgame_button = ttk.Button(button_frame, text='New Game', style='W.TButton', command=newgame_function)
+    back_button = ttk.Button(button_frame, text='Back', style='W.TButton', command=back_function)
+    newgame_button.grid(column=0, row=0, padx=5, sticky=tk.N)
+    back_button.grid(column=1, row=0, padx=5, sticky=tk.N)
 
     ttk.Separator(orient='horizontal').pack()
 
     players = []
-    for i in range(0, 3):
+    for i in range(0, player_number):
         players.append(Player(i, colors[i]))
 
     c = tk.Canvas(root, height=root.winfo_height(),

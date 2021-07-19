@@ -1,11 +1,11 @@
 from grid import Grid
 import tkinter as tk
-from tkinter import Frame, ttk
+from tkinter import ttk
 from network import *
 from _thread import *
 from chainRxa2 import call_join_start
 
-def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_style,mainScreen,home_page,isHost):
+def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_style, mainScreen, home_page, isHost):
 
     # player_number, grid_size = int(player_number) + 1, int(grid_size)
     # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
@@ -18,36 +18,31 @@ def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_s
     # def back_function():
     #     mainScreen(root, home_page, image_frame, button_style)
     def start():
-        call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, 3, grid_size, button_style,isHost,ipaddress.get())
-
+        call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, 3, grid_size, button_style, isHost, ipaddress.get())
 
     widget_destroy(root)
     image_frame()
 
     new_frame = ttk.Frame(root, relief='raised', borderwidth=2)
-    new_frame.place(x=260, y=510)
+    new_frame.place(x=268, y=512.5)
 
     ip_label = ttk.Label(new_frame, style='W.TLabel', text="IP Address:")
     ip_label.grid(column=0, row=0, padx=5, sticky=tk.W)
-    
-    
 
     ipaddress = tk.StringVar()
     # ipaddress.set("192.168.000.000")
     ip_entry = ttk.Entry(new_frame, textvariable=ipaddress, style='W.TEntry', width=30)
     ip_entry.grid(column=1, row=0, sticky=tk.W)
-    
+
     def focus_in(*args):
         ip_entry.delete(0, 'end')
-        
 
-    
-    ip_entry.bind("<FocusIn>",focus_in)
+    ip_entry.bind("<FocusIn>", focus_in)
     ip_entry.insert(0, 'Enter IP address')
-    
+
     # print(ip_entry.focus_get())
-    
-    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=start )
+
+    submit_button = ttk.Button(new_frame, text="Submit", style='W.TButton', command=start)
     submit_button.grid(column=1, row=1, padx=5, pady=5, sticky=tk.W)
 
     back_button = ttk.Button(new_frame, text='Back', style="W.TButton", command=local_page)
@@ -74,5 +69,5 @@ def call_join(root, local_page, widget_destroy, image_frame, grid_size, button_s
     #     n=Network()
 
     # start_new_thread(client,())
-    
+
     root.mainloop()

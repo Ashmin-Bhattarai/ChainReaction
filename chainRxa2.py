@@ -8,15 +8,15 @@ from server import *
 player = 1
 
 # cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
-colors = ["#000000", "#12FF00", "#01AF9D", "#FF0D0D",
-          "#0DAFE8", "#82BFDC", "#FFEB78", "#33FFDD", "#444545"]
+colors = ["#000000", "#00FF00", "#00FFFF", "#FF0000",
+          "#0000FF", "#FF00FF", "#FFCCAA", "#AACCFF", "#FFFF00"]
 
 
 class Player:
     def __init__(self, id, color):
         self.id = id
         self.color = color
-        self.name=id
+        self.name = id
 
 
 def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style):
@@ -58,8 +58,8 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
     root.mainloop()
 
 
-def call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style,isHost,ipaddress):
-       
+def call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style, isHost, ipaddress):
+
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
 
@@ -97,33 +97,31 @@ def call_join_start(root, mainScreen, widget_destroy, home_page, image_frame, pl
 
     def client():
         print("Client thread started:")
-        tmpx=-1
-        tmpy=-1
-        n=Network()
-        n.server=ipaddress
+        tmpx = -1
+        tmpy = -1
+        n = Network()
+        n.server = ipaddress
         n.connect()
-        clock=pygame.time.Clock()
-        while True:      
-            clock.tick(60)      
-            x,y=n.send([cells.x,cells.y,cells.played])   
-            
-            if not (tmpx==x and tmpy==y)and cells.played==False :
+        clock = pygame.time.Clock()
+        while True:
+            clock.tick(10)
+            x, y = n.send([cells.x, cells.y, cells.played])
+
+            if not (tmpx == x and tmpy == y) and cells.played == False:
                 # cells.playerIndex=nextplayer
-                print(" x=",x,"y=",y)
-                cells.x=x
-                cells.y=y
+                print(" x=", x, "y=", y)
+                cells.x = x
+                cells.y = y
                 cells.execute()
-            cells.played=False
-            tmpx=x
-            tmpy=y
+            cells.played = False
+            tmpx = x
+            tmpy = y
 
     def server_start():
         server_run()
 
+    if isHost == True:
+        start_new_thread(server_start, ())
 
-    if isHost==True:
-        start_new_thread(server_start,())
-
-
-    start_new_thread(client,())
+    start_new_thread(client, ())
     root.mainloop()

@@ -7,7 +7,7 @@ def server_run():
     hostname=socket.gethostname()
     ipaddress=socket.gethostbyname(hostname)
     server=ipaddress
-    port=5555
+    port=25565
 
     s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 

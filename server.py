@@ -6,17 +6,11 @@ import sys
 
 
 def server_run():
-<<<<<<< HEAD
-    hostname=socket.gethostname()
-    ipaddress=socket.gethostbyname(hostname)
-    server=ipaddress
-    port=25565
-=======
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
     server = ipaddress
-    port = 5555
->>>>>>> 1fd50f9d0fec8ab13b035b445778c5b70773647a
+    port = 25565
+    #change
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

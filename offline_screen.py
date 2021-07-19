@@ -1,12 +1,8 @@
-from tkinter.constants import RADIOBUTTON
 from chainRxa2 import call_this
 import tkinter as tk
 from tkinter import ttk
 
 values = [i for i in range(2, 11)]
-
-# Random edit just for new commit
-
 selectedPlayer = 2
 selectedGridSize = 8
 
@@ -15,9 +11,10 @@ def widget_destroy(root):
     for widgets in root.winfo_children():
         widgets.destroy()
 
+
 def join_start(root, home_page, image_frame, button_style):
-        call_join(root, mainScreen, widget_destroy, home_page, image_frame,
-                  selectedPlayer, selectedGridSize, button_style)
+    call_join(root, mainScreen, widget_destroy, home_page, image_frame,
+              selectedPlayer, selectedGridSize, button_style)
 
 def mainScreen(root, home_page, image_frame, button_style):
 
@@ -34,18 +31,11 @@ def mainScreen(root, home_page, image_frame, button_style):
         widget_destroy(root)
         call_this(root, mainScreen, widget_destroy, home_page, image_frame,
                   selectedPlayer, selectedGridSize, button_style)
-    
-
-    def back():
-        home_page()
 
     image_frame()
-
     player_seclection_frame = ttk.Frame(
         root, relief='raised', borderwidth=2)
-    player_seclection_frame.columnconfigure(0, weight=1)
-    player_seclection_frame.columnconfigure(1, weight=3)
-    player_seclection_frame.place(x=290, y=500)
+    player_seclection_frame.place(x=271, y=512.5)
 
     no_of_players = ttk.Combobox(player_seclection_frame)
     no_of_players['values'] = values[:7]
@@ -75,18 +65,14 @@ def mainScreen(root, home_page, image_frame, button_style):
         widget.grid(padx=5, pady=3)
 
     start_button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    start_button_frame.place(x=325, y=610)
+    start_button_frame.place(x=300, y=606)
     start_btn = ttk.Button(start_button_frame, text="start",
                            style='W.TButton', command=gameStart)
     back_btn = ttk.Button(start_button_frame, text="Back",
-                          style='W.TButton', command=back)
+                          style='W.TButton', command=lambda: home_page())
     start_btn.grid(column=0, row=0, sticky=tk.W)
     back_btn.grid(column=1, row=0, padx=3, sticky=tk.W)
     root.mainloop()
-
-
-
-    
 
 
 if __name__ == "__main__":

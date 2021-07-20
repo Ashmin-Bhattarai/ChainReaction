@@ -19,6 +19,8 @@ class Grid(explode.Explode):
         self.x = -1
         self.y = -1
         self.myid=-1
+        self.isOnline = False
+        
     def set_c(self,c):
         self.c=c
     def grid(self, event=None):
@@ -202,7 +204,15 @@ class Grid(explode.Explode):
                         for j in range(0, self.size):
                             if self.cells[i][j][1] >= num:
                                 self.cells[i][j][1] -= 1
-
+                    
+                    if self.myid == num:
+                        print("my id = ", self.myid, "num = ", num)
+                        self.myid = 99999
+                    
+                    elif self.myid > num:
+                        print("my id = ", self.myid, "num = ", num)
+                        self.myid -= 1
+                    
                     for player in self.players:
                         if player.id >= num:
                             player.id -= 1
@@ -216,7 +226,7 @@ class Grid(explode.Explode):
     def numbering(self, event):
         
         #global player, cells, cord_list
-        if self.myid==self.playerIndex:
+        if self.myid==self.playerIndex or not self.isOnline:
             self.x = int(event.x / (self.w // self.size))
             self.y = int(event.y / (self.h // self.size))
             self.execute()

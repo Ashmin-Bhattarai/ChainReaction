@@ -185,6 +185,7 @@ class Grid(explode.Explode):
         move_circle()
 
     def checkstatus(self):
+        #ghange here
         ballNum = [0 for _ in self.players]
         if not self.firstTime:
             for x in range(0, self.size):

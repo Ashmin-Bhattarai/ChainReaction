@@ -57,7 +57,7 @@ def server_run():
             # cells.size=isHost[2]
             host_initialize()
         print("grid size=",cells.size)
-        conn.sendall(pickle.dumps(cells))
+        conn.sendall(pickle.dumps([cells,player_count]))
         while run:
             # clock.tick(60)
             try:
@@ -91,4 +91,6 @@ def server_run():
 
 
 if __name__ == "__main__":
+    max_player=2
+    grid_size=8
     server_run()

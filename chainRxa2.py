@@ -89,9 +89,13 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
     n.server = ipaddress
     n.connect()
     if not isHost:
-        cells=n.send([isHost])
+        server_get=n.send([isHost])
     else:
-        cells=n.send([isHost,player_number-1,grid_size])
+        server_get=n.send([isHost,player_number-1,grid_size])
+    cells=server_get[0]
+    cells.myid=server_get[1]
+    print(cells.myid)
+
     cells.set_c(c)
     c.bind('<Configure>', cells.grid)
     c.bind('<Button-1>', cells.numbering)

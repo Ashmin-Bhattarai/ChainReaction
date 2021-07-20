@@ -18,6 +18,7 @@ class Grid(explode.Explode):
         self.played = False
         self.x = -1
         self.y = -1
+        self.myid=-1
     def set_c(self,c):
         self.c=c
     def grid(self, event=None):
@@ -213,10 +214,12 @@ class Grid(explode.Explode):
                 self.c.create_text((self.w + len(string)) // 2, (self.h / 2) - 50, font="Arial 40 bold", fill=self.players[1].color, text=string)
 
     def numbering(self, event):
+        
         #global player, cells, cord_list
-        self.x = int(event.x / (self.w // self.size))
-        self.y = int(event.y / (self.h // self.size))
-        self.execute()
+        if self.myid==self.playerIndex:
+            self.x = int(event.x / (self.w // self.size))
+            self.y = int(event.y / (self.h // self.size))
+            self.execute()
         #print(self.x, self.y)
 
     def execute(self):
@@ -259,7 +262,7 @@ class Grid(explode.Explode):
 
     def isvalid(self, x, y):
         global cells
-        if self.cells[x][y][1] == 0 or self.cells[x][y][1] == self.player:
+        if (self.cells[x][y][1] == 0 or self.cells[x][y][1] == self.player) :
             return True
         else:
             return False

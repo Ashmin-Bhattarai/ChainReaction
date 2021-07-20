@@ -22,6 +22,7 @@ class Network:
             return pickle.loads(self.client.recv(2048))
         except socket.error as e:
             print(e)
+
     # def initail_connnect(self):
     #     try:
 

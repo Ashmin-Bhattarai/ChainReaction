@@ -9,7 +9,9 @@ class Grid(explode.Explode):
         self.size = size
         self.player = 1
         self.cord_list = []
-        self.cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
+        self.cells = [
+            [[0 for cell in range(2)] for col in range(size)] for row in range(size)
+        ]
         self.players = players
         self.player_number = player_number
         self.playerIndex = 1
@@ -18,13 +20,14 @@ class Grid(explode.Explode):
         self.played = False
         self.x = -1
         self.y = -1
-        self.myid=-1
+        self.myid = -1
         self.isOnline = False
-        
-    def set_c(self,c):
-        self.c=c
+
+    def set_c(self, c):
+        self.c = c
+
     def grid(self, event=None):
-        #global player, colors, cells
+        # global player, colors, cells
         self.w = self.c.winfo_width()  # Get current width of canvas
         self.h = self.c.winfo_height()  # Get current height of canvas
 
@@ -35,10 +38,18 @@ class Grid(explode.Explode):
 
         # Creates all vertical lines
         for i in range(0, self.w, self.xd):
-            verticalLine = self.c.create_line([(i, 0), (i, self.h)], tag='grid_line', fill=self.players[self.playerIndex].color)
+            verticalLine = self.c.create_line(
+                [(i, 0), (i, self.h)],
+                tag="grid_line",
+                fill=self.players[self.playerIndex].color,
+            )
         # Creates all horizontal lines
         for i in range(0, self.h, self.yd):
-            horizontalLine = self.c.create_line([(0, i), (self.w, i)], tag='grid_line', fill=self.players[self.playerIndex].color)
+            horizontalLine = self.c.create_line(
+                [(0, i), (self.w, i)],
+                tag="grid_line",
+                fill=self.players[self.playerIndex].color,
+            )
 
         # display text
         # for i in range(self.size):
@@ -56,8 +67,12 @@ class Grid(explode.Explode):
 
         if self.cells[x][y][0] == 1:
 
-            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (self.yd * y + self.yd / 2 - ballSize)
-            x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (self.yd * y + self.yd / 2 + ballSize)
+            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
+                self.yd * y + self.yd / 2 - ballSize
+            )
+            x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (
+                self.yd * y + self.yd / 2 + ballSize
+            )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
 
@@ -65,14 +80,18 @@ class Grid(explode.Explode):
 
             self.c.delete(tag + "1")
 
-            x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (self.yd * y + self.yd / 2 - ballSize)
+            x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (
+                self.yd * y + self.yd / 2 - ballSize
+            )
             x2, y2 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2 + ballSize)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '1')
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
 
             x1, y1 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2 - ballSize)
-            x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (self.yd * y + self.yd / 2 + ballSize)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '2')
+            x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (
+                self.yd * y + self.yd / 2 + ballSize
+            )
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
 
         elif self.cells[x][y][0] == 3:
@@ -80,19 +99,27 @@ class Grid(explode.Explode):
             self.c.delete(tag + "1")
             self.c.delete(tag + "2")
 
-            x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (self.yd * y + self.yd / 2)
-            x2, y2 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2 + ballSize * 2)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '1')
+            x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (
+                self.yd * y + self.yd / 2
+            )
+            x2, y2 = (self.xd * x + self.xd / 2), (
+                self.yd * y + self.yd / 2 + ballSize * 2
+            )
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
 
             x1, y1 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2)
-            x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (self.yd * y + self.yd / 2 + ballSize * 2)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '2')
+            x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (
+                self.yd * y + self.yd / 2 + ballSize * 2
+            )
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
 
-            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (self.yd * y + self.yd / 2 - ballSize * 2)
+            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
+                self.yd * y + self.yd / 2 - ballSize * 2
+            )
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (self.yd * y + self.yd / 2)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '3')
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "3")
             self.c.update()
 
         elif self.cells[x][y][0] == 4:
@@ -101,29 +128,41 @@ class Grid(explode.Explode):
             self.c.delete(tag + "2")
             self.c.delete(tag + "3")
 
-            x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (self.yd * y + self.yd / 2)
-            x2, y2 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2 + ballSize * 2)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '1')
+            x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (
+                self.yd * y + self.yd / 2
+            )
+            x2, y2 = (self.xd * x + self.xd / 2), (
+                self.yd * y + self.yd / 2 + ballSize * 2
+            )
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
 
             x1, y1 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2)
-            x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (self.yd * y + self.yd / 2 + ballSize * 2)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '2')
+            x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (
+                self.yd * y + self.yd / 2 + ballSize * 2
+            )
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
 
-            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (self.yd * y + self.yd / 2 - ballSize * 2)
+            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
+                self.yd * y + self.yd / 2 - ballSize * 2
+            )
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (self.yd * y + self.yd / 2)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '3')
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "3")
             self.c.update()
 
-            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (self.yd * y + self.yd / 2 + ballSize * 2)
-            x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (self.yd * y + self.yd / 2 + ballSize * 4)
-            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + '4')
+            x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
+                self.yd * y + self.yd / 2 + ballSize * 2
+            )
+            x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (
+                self.yd * y + self.yd / 2 + ballSize * 4
+            )
+            self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "4")
             self.c.update()
 
     def animate_corner(self, tag, x1, y1, x2, y2):
         # print("Inside animate")
-        #tag = "circle_" + str(x) + "_" + str(y) + "_"
+        # tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
 
         def move_circle():
@@ -138,12 +177,13 @@ class Grid(explode.Explode):
             else:
                 # time.sleep(0.001)
                 move_circle()
-            #self.c.after(2, move_circle)
+            # self.c.after(2, move_circle)
+
         move_circle()
 
     def animate_edge(self, tag, x1, y1, x2, y2, x3, y3):
         # print("Inside animate")
-        #tag = "circle_" + str(x) + "_" + str(y) + "_"
+        # tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
 
         def move_circle():
@@ -159,12 +199,13 @@ class Grid(explode.Explode):
             else:
                 # time.sleep(0.001)
                 move_circle()
-            #self.c.after(2, move_circle)
+            # self.c.after(2, move_circle)
+
         move_circle()
 
     def animate_middle(self, tag, x1, y1, x2, y2, x3, y3, x4, y4):
         # print("Inside animate")
-        #tag = "circle_" + str(x) + "_" + str(y) + "_"
+        # tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
 
         def move_circle():
@@ -181,7 +222,8 @@ class Grid(explode.Explode):
             else:
                 # time.sleep(0.001)
                 move_circle()
-            #self.c.after(2, move_circle)
+            # self.c.after(2, move_circle)
+
         move_circle()
 
     def checkstatus(self):
@@ -189,8 +231,10 @@ class Grid(explode.Explode):
         if not self.firstTime:
             for x in range(0, self.size):
                 for y in range(0, self.size):
-                    ballNum[self.cells[x][y][1]] = ballNum[self.cells[x][y][1]] + self.cells[x][y][0]
-                    #print(ballNum[self.cells[x][y][1]], self.cells[x][y][1], self.cells[x][y][0])
+                    ballNum[self.cells[x][y][1]] = (
+                        ballNum[self.cells[x][y][1]] + self.cells[x][y][0]
+                    )
+                    # print(ballNum[self.cells[x][y][1]], self.cells[x][y][1], self.cells[x][y][0])
             # print(ballNum)
 
             for num in range(1, len(ballNum)):
@@ -204,15 +248,15 @@ class Grid(explode.Explode):
                         for j in range(0, self.size):
                             if self.cells[i][j][1] >= num:
                                 self.cells[i][j][1] -= 1
-                    
+
                     if self.myid == num:
                         # print("my id = ", self.myid, "num = ", num)
                         self.myid = 99999
-                    
+
                     elif self.myid > num:
                         # print("my id = ", self.myid, "num = ", num)
                         self.myid -= 1
-                    
+
                     for player in self.players:
                         if player.id >= num:
                             player.id -= 1
@@ -221,16 +265,22 @@ class Grid(explode.Explode):
                 # print("Win By: ", self.players[1].color)
                 self.c.delete("all")
                 string = "Player %a Won the Game !!" % (self.players[1].name)
-                self.c.create_text((self.w + len(string)) // 2, (self.h / 2) - 50, font="Arial 40 bold", fill=self.players[1].color, text=string)
+                self.c.create_text(
+                    (self.w + len(string)) // 2,
+                    (self.h / 2) - 50,
+                    font="Arial 40 bold",
+                    fill=self.players[1].color,
+                    text=string,
+                )
 
     def numbering(self, event):
-        
-        #global player, cells, cord_list
-        if self.myid==self.playerIndex or not self.isOnline:
+
+        # global player, cells, cord_list
+        if self.myid == self.playerIndex or not self.isOnline:
             self.x = int(event.x / (self.w // self.size))
             self.y = int(event.y / (self.h // self.size))
             self.execute()
-        #print(self.x, self.y)
+        # print(self.x, self.y)
 
     def execute(self):
         if self.isvalid(self.x, self.y):
@@ -239,7 +289,7 @@ class Grid(explode.Explode):
             self.cells[self.x][self.y][1] = self.player
             self.cord_list = [[self.x, self.y]]
             # print(self.cells[self.x][self.y])
-            #print("x,y, v = ", self.x, self.y, self.cells[self.x][self.y][0])
+            # print("x,y, v = ", self.x, self.y, self.cells[self.x][self.y][0])
 
             self.drawCircles(self.x, self.y)
 
@@ -272,7 +322,7 @@ class Grid(explode.Explode):
 
     def isvalid(self, x, y):
         global cells
-        if (self.cells[x][y][1] == 0 or self.cells[x][y][1] == self.player) :
+        if self.cells[x][y][1] == 0 or self.cells[x][y][1] == self.player:
             return True
         else:
             return False

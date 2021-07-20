@@ -1,6 +1,14 @@
-colors = ["#000000", "#00FF00", "#00FFFF", "#FF0000",
-          "#0000FF", "#FF00FF", "#FFCCAA", "#AACCFF",
-          "#FFFF00"]
+colors = [
+    "#000000",
+    "#00FF00",
+    "#00FFFF",
+    "#FF0000",
+    "#0000FF",
+    "#FF00FF",
+    "#FFCCAA",
+    "#AACCFF",
+    "#FFFF00",
+]
 
 
 class Player:

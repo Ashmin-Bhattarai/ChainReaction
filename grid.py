@@ -67,11 +67,21 @@ class Grid(explode.Explode):
 
         if self.cells[x][y][0] == 1:
 
+<<<<<<< HEAD
             x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
                 self.yd * y + self.yd / 2 - ballSize
             )
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (
                 self.yd * y + self.yd / 2 + ballSize
+=======
+            x1, y1 = (
+                (self.xd * x + self.xd / 2 - ballSize),
+                (self.yd * y + self.yd / 2 - ballSize),
+            )
+            x2, y2 = (
+                (self.xd * x + self.xd / 2 + ballSize),
+                (self.yd * y + self.yd / 2 + ballSize),
+>>>>>>> ashmin
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
@@ -80,16 +90,28 @@ class Grid(explode.Explode):
 
             self.c.delete(tag + "1")
 
+<<<<<<< HEAD
             x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (
                 self.yd * y + self.yd / 2 - ballSize
+=======
+            x1, y1 = (
+                (self.xd * x + self.xd / 2 - ballSize * 2),
+                (self.yd * y + self.yd / 2 - ballSize),
+>>>>>>> ashmin
             )
             x2, y2 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2 + ballSize)
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
 
             x1, y1 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2 - ballSize)
+<<<<<<< HEAD
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (
                 self.yd * y + self.yd / 2 + ballSize
+=======
+            x2, y2 = (
+                (self.xd * x + self.xd / 2 + ballSize * 2),
+                (self.yd * y + self.yd / 2 + ballSize),
+>>>>>>> ashmin
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
@@ -99,24 +121,46 @@ class Grid(explode.Explode):
             self.c.delete(tag + "1")
             self.c.delete(tag + "2")
 
+<<<<<<< HEAD
             x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (
                 self.yd * y + self.yd / 2
             )
             x2, y2 = (self.xd * x + self.xd / 2), (
                 self.yd * y + self.yd / 2 + ballSize * 2
+=======
+            x1, y1 = (
+                (self.xd * x + self.xd / 2 - ballSize * 2),
+                (self.yd * y + self.yd / 2),
+            )
+            x2, y2 = (
+                (self.xd * x + self.xd / 2),
+                (self.yd * y + self.yd / 2 + ballSize * 2),
+>>>>>>> ashmin
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
 
             x1, y1 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2)
+<<<<<<< HEAD
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (
                 self.yd * y + self.yd / 2 + ballSize * 2
+=======
+            x2, y2 = (
+                (self.xd * x + self.xd / 2 + ballSize * 2),
+                (self.yd * y + self.yd / 2 + ballSize * 2),
+>>>>>>> ashmin
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
 
+<<<<<<< HEAD
             x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
                 self.yd * y + self.yd / 2 - ballSize * 2
+=======
+            x1, y1 = (
+                (self.xd * x + self.xd / 2 - ballSize),
+                (self.yd * y + self.yd / 2 - ballSize * 2),
+>>>>>>> ashmin
             )
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (self.yd * y + self.yd / 2)
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "3")
@@ -128,34 +172,66 @@ class Grid(explode.Explode):
             self.c.delete(tag + "2")
             self.c.delete(tag + "3")
 
+<<<<<<< HEAD
             x1, y1 = (self.xd * x + self.xd / 2 - ballSize * 2), (
                 self.yd * y + self.yd / 2
             )
             x2, y2 = (self.xd * x + self.xd / 2), (
                 self.yd * y + self.yd / 2 + ballSize * 2
+=======
+            x1, y1 = (
+                (self.xd * x + self.xd / 2 - ballSize * 2),
+                (self.yd * y + self.yd / 2),
+            )
+            x2, y2 = (
+                (self.xd * x + self.xd / 2),
+                (self.yd * y + self.yd / 2 + ballSize * 2),
+>>>>>>> ashmin
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
             self.c.update()
 
             x1, y1 = (self.xd * x + self.xd / 2), (self.yd * y + self.yd / 2)
+<<<<<<< HEAD
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize * 2), (
                 self.yd * y + self.yd / 2 + ballSize * 2
+=======
+            x2, y2 = (
+                (self.xd * x + self.xd / 2 + ballSize * 2),
+                (self.yd * y + self.yd / 2 + ballSize * 2),
+>>>>>>> ashmin
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
 
+<<<<<<< HEAD
             x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
                 self.yd * y + self.yd / 2 - ballSize * 2
+=======
+            x1, y1 = (
+                (self.xd * x + self.xd / 2 - ballSize),
+                (self.yd * y + self.yd / 2 - ballSize * 2),
+>>>>>>> ashmin
             )
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (self.yd * y + self.yd / 2)
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "3")
             self.c.update()
 
+<<<<<<< HEAD
             x1, y1 = (self.xd * x + self.xd / 2 - ballSize), (
                 self.yd * y + self.yd / 2 + ballSize * 2
             )
             x2, y2 = (self.xd * x + self.xd / 2 + ballSize), (
                 self.yd * y + self.yd / 2 + ballSize * 4
+=======
+            x1, y1 = (
+                (self.xd * x + self.xd / 2 - ballSize),
+                (self.yd * y + self.yd / 2 + ballSize * 2),
+            )
+            x2, y2 = (
+                (self.xd * x + self.xd / 2 + ballSize),
+                (self.yd * y + self.yd / 2 + ballSize * 4),
+>>>>>>> ashmin
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "4")
             self.c.update()
@@ -227,6 +303,7 @@ class Grid(explode.Explode):
         move_circle()
 
     def checkstatus(self):
+        # ghange here
         ballNum = [0 for _ in self.players]
         if not self.firstTime:
             for x in range(0, self.size):
@@ -236,11 +313,14 @@ class Grid(explode.Explode):
                     )
                     # print(ballNum[self.cells[x][y][1]], self.cells[x][y][1], self.cells[x][y][0])
             # print(ballNum)
-
+            # ballNum = 0, 5, 0, 0
+            # players = [o0, o1, o3]
+            pop_list = []
             for num in range(1, len(ballNum)):
                 # print(num)
                 if ballNum[num] == 0:
-                    self.players.pop(num)
+                    pop_list.append(num)
+                    # self.players.pop(num)
                     # print("chekpoint checkstatus")
                     self.player_number -= 1
 
@@ -260,6 +340,10 @@ class Grid(explode.Explode):
                     for player in self.players:
                         if player.id >= num:
                             player.id -= 1
+            # pop_list= [2, 3]
+            pop_list.reverse()
+            for i in pop_list:
+                self.players.pop(i)
 
             if len(self.players) == 2:
                 # print("Win By: ", self.players[1].color)

@@ -122,17 +122,17 @@ class Grid(explode.Explode):
             self.c.update()
 
     def animate_corner(self, tag, x1, y1, x2, y2):
-        print("Inside animate")
+        # print("Inside animate")
         #tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
 
         def move_circle():
-            print("Inside move")
+            # print("Inside move")
             self.c.move(tag + "1", x1, y1)
             self.c.move(tag + "2", x2, y2)
             self.c.update()
             self.i += 1
-            print(self.i)
+            # print(self.i)
             if self.i >= self.xd:
                 return
             else:
@@ -142,18 +142,18 @@ class Grid(explode.Explode):
         move_circle()
 
     def animate_edge(self, tag, x1, y1, x2, y2, x3, y3):
-        print("Inside animate")
+        # print("Inside animate")
         #tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
 
         def move_circle():
-            print("Inside move")
+            # print("Inside move")
             self.c.move(tag + "1", x1, y1)
             self.c.move(tag + "2", x2, y2)
             self.c.move(tag + "3", x3, y3)
             self.c.update()
             self.i += 1
-            print(self.i)
+            # print(self.i)
             if self.i >= self.xd:
                 return
             else:
@@ -163,19 +163,19 @@ class Grid(explode.Explode):
         move_circle()
 
     def animate_middle(self, tag, x1, y1, x2, y2, x3, y3, x4, y4):
-        print("Inside animate")
+        # print("Inside animate")
         #tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
 
         def move_circle():
-            print("Inside move")
+            # print("Inside move")
             self.c.move(tag + "1", x1, y1)
             self.c.move(tag + "2", x2, y2)
             self.c.move(tag + "3", x3, y3)
             self.c.move(tag + "4", x4, y4)
             self.c.update()
             self.i += 1
-            print(self.i)
+            # print(self.i)
             if self.i >= self.xd:
                 return
             else:
@@ -191,13 +191,13 @@ class Grid(explode.Explode):
                 for y in range(0, self.size):
                     ballNum[self.cells[x][y][1]] = ballNum[self.cells[x][y][1]] + self.cells[x][y][0]
                     #print(ballNum[self.cells[x][y][1]], self.cells[x][y][1], self.cells[x][y][0])
-            print(ballNum)
+            # print(ballNum)
 
             for num in range(1, len(ballNum)):
-                print(num)
+                # print(num)
                 if ballNum[num] == 0:
                     self.players.pop(num)
-                    print("chekpoint checkstatus")
+                    # print("chekpoint checkstatus")
                     self.player_number -= 1
 
                     for i in range(0, self.size):
@@ -206,11 +206,11 @@ class Grid(explode.Explode):
                                 self.cells[i][j][1] -= 1
                     
                     if self.myid == num:
-                        print("my id = ", self.myid, "num = ", num)
+                        # print("my id = ", self.myid, "num = ", num)
                         self.myid = 99999
                     
                     elif self.myid > num:
-                        print("my id = ", self.myid, "num = ", num)
+                        # print("my id = ", self.myid, "num = ", num)
                         self.myid -= 1
                     
                     for player in self.players:
@@ -218,7 +218,7 @@ class Grid(explode.Explode):
                             player.id -= 1
 
             if len(self.players) == 2:
-                print("Win By: ", self.players[1].color)
+                # print("Win By: ", self.players[1].color)
                 self.c.delete("all")
                 string = "Player %a Won the Game !!" % (self.players[1].name)
                 self.c.create_text((self.w + len(string)) // 2, (self.h / 2) - 50, font="Arial 40 bold", fill=self.players[1].color, text=string)
@@ -258,15 +258,15 @@ class Grid(explode.Explode):
             #     t.join()
 
             self.checkstatus()
-            print("before")
+            # print("before")
             self.playerIndex += 1
-            print("player index=", self.playerIndex, "player number=", self.player_number)
-            print("after")
+            # print("player index=", self.playerIndex, "player number=", self.player_number)
+            # print("after")
             if self.playerIndex > (self.player_number - 1):
                 self.playerIndex = 1
                 self.firstTime = False
             self.player = self.players[self.playerIndex].id
-            print("player=", self.player, "player index=", self.playerIndex)
+            # print("player=", self.player, "player index=", self.playerIndex)
             if len(self.players) != 2:
                 self.grid()
 

@@ -11,13 +11,13 @@ class Explode:
         global cord_list
         x = self.cord_list[0][0]
         y = self.cord_list[0][1]
-        print(x, y)
+        # print(x, y)
         # self.removeCircles(x, y)
         tag = "circle_" + str(x) + "_" + str(y) + "_"
 
         # Upper Left Corner
         if x == 0 and y == 0 and self.cells[x][y][0] >= 2:
-            print("satisfy")
+            # print("satisfy")
             self.animate_corner(tag, 1, 0, 0, 1)
             self.play_sound('soundeffects/explode.wav')
             self.cells[x][y][0] = self.cells[x][y][0] - 2

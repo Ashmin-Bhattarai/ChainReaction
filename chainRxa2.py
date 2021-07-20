@@ -12,7 +12,7 @@ cells=0
 
 def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style):
     player_number, grid_size = int(player_number) + 1, int(grid_size)
-    print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
+    # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
 
     def newgame_function():
         widget_destroy(root)
@@ -51,9 +51,9 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
 
 def call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, player_number, grid_size, button_style, isHost, ipaddress):
     global cells
-    print("call_join_start ip address=",ipaddress)
+    # print("call_join_start ip address=",ipaddress)
     player_number, grid_size = int(player_number) + 1, int(grid_size)
-    print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
+    # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
 
     def newgame_function():
         widget_destroy(root)
@@ -95,12 +95,12 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
     cells=server_get[0]
     cells.myid=server_get[1]
     cells.isOnline = True
-    print(cells.myid)
+    # print(cells.myid)
 
     cells.set_c(c)
     c.bind('<Configure>', cells.grid)
     c.bind('<Button-1>', cells.numbering)
-    print("Client thread started:")
+    # print("Client thread started:")
     
     
     def client():
@@ -117,7 +117,7 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
 
             if not (tmpx == x and tmpy == y) and cells.played == False:
                 # cells.playerIndex=nextplayer
-                print(" x=", x, "y=", y)
+                # print(" x=", x, "y=", y)
                 cells.x = x
                 cells.y = y
                 cells.execute()

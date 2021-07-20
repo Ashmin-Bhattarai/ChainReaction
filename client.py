@@ -17,7 +17,7 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
         # print(selected_playersize, selected_gridSize)
         if len(ip)==0:
             ip=ipaddress
-        print("from start=",ip)
+        # print("from start=",ip)
         call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, selected_playersize, selected_gridSize, button_style, isHost, ip)
 
     widget_destroy(root)

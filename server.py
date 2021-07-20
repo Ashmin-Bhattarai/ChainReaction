@@ -20,7 +20,7 @@ def server_run():
     server = ipaddress
     port = 25565
     # port = 5555
-    print(server)
+    # print(server)
 
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -41,7 +41,7 @@ def server_run():
         global cells
         for i in range(0, max_player+1):
             players.append(Player(i, colors[i]))
-        print("inside function=",grid_size)
+        # print("inside function=",grid_size)
         cells = Grid(grid_size, players, max_player+1)
     def threaded_client(conn):
         global playerindex, x, y, played, playerChange,player_count,max_player,cells,grid_size
@@ -50,13 +50,13 @@ def server_run():
         if isHost[0]:
             max_player=isHost[1]
             grid_size=isHost[2]
-            print("inside if=",grid_size)
+            # print("inside if=",grid_size)
             # max_player=isHost[1]
             # max_player=isHost[1]
             # print("max_player=",max_player)
             # cells.size=isHost[2]
             host_initialize()
-        print("grid size=",cells.size)
+        # print("grid size=",cells.size)
         conn.sendall(pickle.dumps([cells,player_count]))
         while run:
             # clock.tick(60)
@@ -85,7 +85,7 @@ def server_run():
 
     while True:
         conn, addr = s.accept()
-        print("connected to: ", addr)
+        # print("connected to: ", addr)
         player_count+=1
         start_new_thread(threaded_client, (conn,))
 

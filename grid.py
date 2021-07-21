@@ -178,13 +178,14 @@ class Grid(explode.Explode):
         # print("Inside animate")
         # tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
+        v = 3
 
         def move_circle():
             # print("Inside move")
-            self.c.move(tag + "1", x1, y1)
-            self.c.move(tag + "2", x2, y2)
+            self.c.move(tag + "1", x1*v, y1*v)
+            self.c.move(tag + "2", x2*v, y2*v)
             self.c.update()
-            self.i += 1
+            self.i += v
             # print(self.i)
             if self.i >= self.xd:
                 return
@@ -201,14 +202,15 @@ class Grid(explode.Explode):
         # print("Inside animate")
         # tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
+        v = 3
 
         def move_circle():
             # print("Inside move")
-            self.c.move(tag + "1", x1, y1)
-            self.c.move(tag + "2", x2, y2)
-            self.c.move(tag + "3", x3, y3)
+            self.c.move(tag + "1", x1*v, y1*v)
+            self.c.move(tag + "2", x2*v, y2*v)
+            self.c.move(tag + "3", x3*v, y3*v)
             self.c.update()
-            self.i += 1
+            self.i += 3
             # print(self.i)
             if self.i >= self.xd:
                 return
@@ -226,15 +228,16 @@ class Grid(explode.Explode):
         # print("Inside animate")
         # tag = "circle_" + str(x) + "_" + str(y) + "_"
         self.i = 0
+        v = 3
 
         def move_circle():
             # print("Inside move")
-            self.c.move(tag + "1", x1, y1)
-            self.c.move(tag + "2", x2, y2)
-            self.c.move(tag + "3", x3, y3)
-            self.c.move(tag + "4", x4, y4)
+            self.c.move(tag + "1", x1*v, y1*v)
+            self.c.move(tag + "2", x2*v, y2*v)
+            self.c.move(tag + "3", x3*v, y3*v)
+            self.c.move(tag + "4", x4*v, y4*v)
             self.c.update()
-            self.i += 1
+            self.i += v
             # print(self.i)
             if self.i >= self.xd:
                 return

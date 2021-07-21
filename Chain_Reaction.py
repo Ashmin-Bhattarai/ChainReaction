@@ -7,7 +7,7 @@ from PIL import ImageTk, Image
 
 root = tk.Tk()
 root.title("Chain Reaction")
-root.geometry("800x800")
+root.geometry("700x700")
 root.resizable(0, 0)
 font = {"font": ("Arial", 10, "bold"), "background": "#EE018B"}
 

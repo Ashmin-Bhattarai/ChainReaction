@@ -98,7 +98,7 @@ class Grid(explode.Explode):
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
 
-        elif self.cells[x][y][0] == 3:
+        elif self.cells[x][y][0] == 3 and ([x, y] not in [[0,0],[0,self.size-1],[self.size-1, 0],[self.size-1, self.size-1]]):
 
             self.c.delete(tag + "1")
             self.c.delete(tag + "2")
@@ -130,7 +130,7 @@ class Grid(explode.Explode):
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "3")
             self.c.update()
 
-        elif self.cells[x][y][0] == 4:
+        elif self.cells[x][y][0] == 4 and x in range(1, self.size - 1) and y in range(1, self.size - 1):
 
             self.c.delete(tag + "1")
             self.c.delete(tag + "2")
@@ -194,6 +194,8 @@ class Grid(explode.Explode):
             # self.c.after(2, move_circle)
 
         move_circle()
+        self.c.delete(tag + "1")
+        self.c.delete(tag + "2")
 
     def animate_edge(self, tag, x1, y1, x2, y2, x3, y3):
         # print("Inside animate")
@@ -216,6 +218,9 @@ class Grid(explode.Explode):
             # self.c.after(2, move_circle)
 
         move_circle()
+        self.c.delete(tag + "1")
+        self.c.delete(tag + "2")
+        self.c.delete(tag + "3")
 
     def animate_middle(self, tag, x1, y1, x2, y2, x3, y3, x4, y4):
         # print("Inside animate")
@@ -239,6 +244,10 @@ class Grid(explode.Explode):
             # self.c.after(2, move_circle)
 
         move_circle()
+        self.c.delete(tag + "1")
+        self.c.delete(tag + "2")
+        self.c.delete(tag + "3")
+        self.c.delete(tag + "4")
 
     def checkstatus(self):
         # ghange here

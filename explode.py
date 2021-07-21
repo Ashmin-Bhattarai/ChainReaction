@@ -35,8 +35,8 @@ class Explode:
             self.cord_list.append([x + 1, y])
             self.cord_list.append([x, y + 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
 
             self.drawCircles(x + 1, y)
             self.drawCircles(x, y + 1)
@@ -61,8 +61,8 @@ class Explode:
             self.cord_list.append([x - 1, y])
             self.cord_list.append([x, y + 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
 
             self.drawCircles(x - 1, y)
             self.drawCircles(x, y + 1)
@@ -88,8 +88,8 @@ class Explode:
             self.cord_list.append([x + 1, y])
             self.cord_list.append([x, y - 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
 
             self.drawCircles(x + 1, y)
             self.drawCircles(x, y - 1)
@@ -113,8 +113,9 @@ class Explode:
 
             self.cord_list.append([x - 1, y])
             self.cord_list.append([x, y - 1])
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
+
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
 
             self.drawCircles(x - 1, y)
             self.drawCircles(x, y - 1)
@@ -147,9 +148,9 @@ class Explode:
             self.cord_list.append([x, y - 1])
             self.cord_list.append([x, y + 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
-            self.c.delete(tag + "3")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
+            # self.c.delete(tag + '3')
 
             self.drawCircles(x + 1, y)
             self.drawCircles(x, y - 1)
@@ -188,9 +189,9 @@ class Explode:
             self.cord_list.append([x, y - 1])
             self.cord_list.append([x, y + 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
-            self.c.delete(tag + "3")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
+            # self.c.delete(tag + '3')
 
             self.drawCircles(x - 1, y)
             self.drawCircles(x, y - 1)
@@ -225,9 +226,9 @@ class Explode:
             self.cord_list.append([x - 1, y])
             self.cord_list.append([x, y + 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
-            self.c.delete(tag + "3")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
+            # self.c.delete(tag + '3')
 
             self.drawCircles(x + 1, y)
             self.drawCircles(x - 1, y)
@@ -266,9 +267,9 @@ class Explode:
             self.cord_list.append([x + 1, y])
             self.cord_list.append([x, y - 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
-            self.c.delete(tag + "3")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
+            # self.c.delete(tag + '3')
 
             self.drawCircles(x - 1, y)
             self.drawCircles(x + 1, y)
@@ -276,6 +277,7 @@ class Explode:
             # explode(x - 1, y)
             # explode(x + 1, y)
             # explode(x, y - 1)
+
         # middle
         elif (
             x in range(1, self.size - 1)
@@ -311,10 +313,10 @@ class Explode:
             self.cord_list.append([x, y - 1])
             self.cord_list.append([x, y + 1])
 
-            self.c.delete(tag + "1")
-            self.c.delete(tag + "2")
-            self.c.delete(tag + "3")
-            self.c.delete(tag + "4")
+            # self.c.delete(tag + '1')
+            # self.c.delete(tag + '2')
+            # self.c.delete(tag + '3')
+            # self.c.delete(tag + '4')
 
             self.drawCircles(x + 1, y)
             self.drawCircles(x - 1, y)
@@ -325,6 +327,7 @@ class Explode:
             # explode(x, y - 1)
             # explode(x, y + 1)
 
+        self.drawCircles(x, y)
         self.cord_list = self.cord_list[1:]
         # if len(cord_list) != 0:
         #     print("x,y, v = ", x, y, cells[x][y][0])

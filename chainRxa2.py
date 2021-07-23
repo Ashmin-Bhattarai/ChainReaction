@@ -171,7 +171,7 @@ def call_join_start(
         first_time = True
 
         while True:
-            clock.tick(1)
+            clock.tick(5)
             x, y, gamestart = n.send([cells.x, cells.y, cells.played])
             print("x=", x, "y=", y)
             # print (gamestart)
@@ -185,6 +185,7 @@ def call_join_start(
 
             if not first_time:
                 if cord_list[0] != cord_list[1]:
+                    print("Execute")
                     cells.x = x
                     cells.y = y
                     cells.execute()

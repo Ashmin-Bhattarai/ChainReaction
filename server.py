@@ -20,7 +20,7 @@ def server_run():
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
     server = ipaddress
-    port = 25565
+    port = 5555
     # port = 5555
     # print(server)
 
@@ -76,6 +76,7 @@ def server_run():
                 else:
                     game_start = True
                 conn.sendall(pickle.dumps([x, y, game_start]))
+                Tplayed = False
             except socket.error as e:
                 print("disconnected")
                 run = False

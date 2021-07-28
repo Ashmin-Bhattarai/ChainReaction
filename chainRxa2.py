@@ -151,8 +151,10 @@ def call_join_start(
         server_get = n.send([isHost])
     else:
         server_get = n.send([isHost, player_number - 1, grid_size])
-    print("server_get=",server_get)
+    print("server_get=", server_get)
     cells = server_get[0]
+    print("player number:", cells.player_number)
+    print("grid size:", cells.size)
     cells.myid = server_get[1]
     cells.isOnline = True
     # print(cells.myid)
@@ -173,8 +175,9 @@ def call_join_start(
 
         while True:
             clock.tick(5)
-            print("x=", cells.x, "y=", cells.y,"played=",cells.played)
-            x, y, gamestart = n.send([cells.x, cells.y, cells.played])
+            print("x=", cells.x, "y=", cells.y, "played=", cells.played)
+            x, y, gamestart, cells.played = n.send([cells.x, cells.y, cells.played])
+
             # print("x=", x, "y=", y)
             if first_time:
                 cord_list.insert(0, [x, y])
@@ -186,13 +189,14 @@ def call_join_start(
                 # print("cordlist=", cord_list[0], cord_list[1])
 
             if not first_time:
-                if cord_list[0] != cord_list[1] and cells.played == False:
+                if cord_list[0] != cord_list[1] and cord_list[0] != [cells.x, cells.y]:
                     # print("Execute")
                     cells.x = x
                     cells.y = y
                     cells.execute()
-                else:
-                    cells.played = False
+                # elif cells.played == True:
+                #     cells.played = False
+
             first_time = False
 
     start_new_thread(client, ())

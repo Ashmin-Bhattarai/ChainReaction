@@ -56,7 +56,6 @@ def server_run():
             isHost[0] = True
             isHost.append(max_player)
             isHost.append(grid_size)
-        print("is host=", isHost)
         if isHost[0]:
             max_player = isHost[1]
             grid_size = isHost[2]
@@ -69,10 +68,10 @@ def server_run():
         # print("grid size=",cells.size)
         conn.sendall(pickle.dumps([cells, player_count]))
         while run:
-            # clock.tick(60)
+            clock.tick(20)
             try:
                 Tx, Ty, Tplayed = pickle.loads(conn.recv(2048))
-                print("x=", Tx, "y=", Ty, "played=", Tplayed)
+                # print("x=", Tx, "y=", Ty, "played=", Tplayed)
                 # print(playerindex,x,y,played)
                 # playerChange=False
                 if Tplayed == True:
@@ -82,7 +81,7 @@ def server_run():
                     game_start = False
                 else:
                     game_start = True
-                conn.sendall(pickle.dumps([x, y, game_start]))
+                conn.sendall(pickle.dumps([x, y, game_start, False]))
                 Tplayed = False
             except socket.error as e:
                 print("disconnected")

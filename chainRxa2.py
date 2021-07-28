@@ -151,6 +151,7 @@ def call_join_start(
         server_get = n.send([isHost])
     else:
         server_get = n.send([isHost, player_number - 1, grid_size])
+    print("server_get=",server_get)
     cells = server_get[0]
     cells.myid = server_get[1]
     cells.isOnline = True
@@ -171,8 +172,8 @@ def call_join_start(
         first_time = True
 
         while True:
-            clock.tick(60)
-            print("x=", cells.x, "y=", cells.y)
+            clock.tick(5)
+            print("x=", cells.x, "y=", cells.y,"played=",cells.played)
             x, y, gamestart = n.send([cells.x, cells.y, cells.played])
             # print("x=", x, "y=", y)
             if first_time:

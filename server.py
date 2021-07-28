@@ -10,7 +10,7 @@ player_count = 0
 max_player = 2
 cells = 0
 grid_size = 8
-
+direct_run=False
 
 def server_run():
     global player_count
@@ -51,6 +51,11 @@ def server_run():
         global playerindex, x, y, played, playerChange, player_count, max_player, cells, grid_size
         run = True
         isHost = pickle.loads(conn.recv(1024))
+        if direct_run==True:
+            isHost[0]=True
+            isHost.append(max_player)
+            isHost.append(grid_size)
+        print("is host=",isHost)
         if isHost[0]:
             max_player = isHost[1]
             grid_size = isHost[2]
@@ -97,4 +102,5 @@ def server_run():
 if __name__ == "__main__":
     max_player = 2
     grid_size = 8
+    direct_run=True
     server_run()

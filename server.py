@@ -71,6 +71,7 @@ def server_run():
             # clock.tick(60)
             try:
                 Tx, Ty, Tplayed = pickle.loads(conn.recv(1024))
+                print("x=", Tx, "y=", Ty,"played=",Tplayed)
                 # print(playerindex,x,y,played)
                 # playerChange=False
                 if Tplayed == True:

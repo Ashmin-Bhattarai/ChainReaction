@@ -23,7 +23,7 @@ for style in ["W.TButton", "W.TCheckbutton", "W.TLabel", "W.TEntry"]:
 
 button_style.map("W.TButton", background=[("active", "#00FABC")])
 
-sound_option = tk.IntVar()
+sound_option = tk.IntVar(value=0)
 
 
 def image_frame():
@@ -93,12 +93,12 @@ def settings_page():
 
 def offline_page():
     widget_destroy(root)
-    mainScreen(root, home_page, image_frame, button_style, sound_option)
+    mainScreen(root, home_page, image_frame, button_style, sound_option.get())
 
 
 def join_page(isHost):
     call_join(
-        root, local_page, widget_destroy, image_frame, button_style, home_page, isHost, sound_option
+        root, local_page, widget_destroy, image_frame, button_style, home_page, isHost, sound_option.get()
     )
 
 

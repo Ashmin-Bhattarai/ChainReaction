@@ -19,6 +19,7 @@ class Grid(explode.Explode):
         self.myid = -1
         self.isOnline = False
         self.sound_option = sound_option
+        
 
     def set_c(self, c):
         self.c = c

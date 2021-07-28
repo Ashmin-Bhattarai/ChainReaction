@@ -43,7 +43,7 @@ def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_n
                   width=root.winfo_width(), bg='white')
     c.pack()
 
-    cells = Grid(grid_size, players, player_number, sound_option.get())
+    cells = Grid(grid_size, players, player_number, sound_option)
     cells.set_c(c)
     c.bind('<Configure>', cells.grid)
     c.bind('<Button-1>', cells.numbering)
@@ -77,7 +77,7 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
     # for i in range(0, player_number):
     #     players.append(Player(i, colors[i]))
     def server_start():
-        server_run()
+        server_run(sound_option)
 
     if isHost == True:
         start_new_thread(server_start, ())

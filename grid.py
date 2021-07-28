@@ -325,13 +325,15 @@ class Grid(explode.Explode):
         if self.myid == self.playerIndex or not self.isOnline:
             self.x = int(event.x / (self.w // self.size))
             self.y = int(event.y / (self.h // self.size))
-            print("**************numbering: ", self.x, self.y,"**************")
+            print("**************numbering: ", self.x, self.y, "**************")
+            if self.isvalid(self.x, self.y):
+                self.played = True
             self.execute()
         # print(self.x, self.y)
 
     def execute(self):
         if self.isvalid(self.x, self.y):
-            self.played = True
+            # self.played = True
             self.cells[self.x][self.y][0] += 1
             self.cells[self.x][self.y][1] = self.player
             self.cord_list = [[self.x, self.y]]

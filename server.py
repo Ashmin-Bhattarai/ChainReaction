@@ -81,7 +81,7 @@ def server_run():
                     game_start = False
                 else:
                     game_start = True
-                conn.sendall(pickle.dumps([x, y, game_start, False]))
+                conn.sendall(pickle.dumps([x, y, game_start]))
                 Tplayed = False
             except socket.error as e:
                 print("disconnected")

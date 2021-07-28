@@ -98,7 +98,15 @@ class Grid(explode.Explode):
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "2")
             self.c.update()
 
-        elif self.cells[x][y][0] == 3 and ([x, y] not in [[0,0],[0,self.size-1],[self.size-1, 0],[self.size-1, self.size-1]]):
+        elif self.cells[x][y][0] == 3 and (
+            [x, y]
+            not in [
+                [0, 0],
+                [0, self.size - 1],
+                [self.size - 1, 0],
+                [self.size - 1, self.size - 1],
+            ]
+        ):
 
             self.c.delete(tag + "1")
             self.c.delete(tag + "2")
@@ -130,7 +138,11 @@ class Grid(explode.Explode):
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "3")
             self.c.update()
 
-        elif self.cells[x][y][0] == 4 and x in range(1, self.size - 1) and y in range(1, self.size - 1):
+        elif (
+            self.cells[x][y][0] == 4
+            and x in range(1, self.size - 1)
+            and y in range(1, self.size - 1)
+        ):
 
             self.c.delete(tag + "1")
             self.c.delete(tag + "2")
@@ -182,8 +194,8 @@ class Grid(explode.Explode):
 
         def move_circle():
             # print("Inside move")
-            self.c.move(tag + "1", x1*v, y1*v)
-            self.c.move(tag + "2", x2*v, y2*v)
+            self.c.move(tag + "1", x1 * v, y1 * v)
+            self.c.move(tag + "2", x2 * v, y2 * v)
             self.c.update()
             self.i += v
             # print(self.i)
@@ -206,9 +218,9 @@ class Grid(explode.Explode):
 
         def move_circle():
             # print("Inside move")
-            self.c.move(tag + "1", x1*v, y1*v)
-            self.c.move(tag + "2", x2*v, y2*v)
-            self.c.move(tag + "3", x3*v, y3*v)
+            self.c.move(tag + "1", x1 * v, y1 * v)
+            self.c.move(tag + "2", x2 * v, y2 * v)
+            self.c.move(tag + "3", x3 * v, y3 * v)
             self.c.update()
             self.i += 3
             # print(self.i)
@@ -232,10 +244,10 @@ class Grid(explode.Explode):
 
         def move_circle():
             # print("Inside move")
-            self.c.move(tag + "1", x1*v, y1*v)
-            self.c.move(tag + "2", x2*v, y2*v)
-            self.c.move(tag + "3", x3*v, y3*v)
-            self.c.move(tag + "4", x4*v, y4*v)
+            self.c.move(tag + "1", x1 * v, y1 * v)
+            self.c.move(tag + "2", x2 * v, y2 * v)
+            self.c.move(tag + "3", x3 * v, y3 * v)
+            self.c.move(tag + "4", x4 * v, y4 * v)
             self.c.update()
             self.i += v
             # print(self.i)
@@ -313,6 +325,7 @@ class Grid(explode.Explode):
         if self.myid == self.playerIndex or not self.isOnline:
             self.x = int(event.x / (self.w // self.size))
             self.y = int(event.y / (self.h // self.size))
+            print("**************numbering: ", self.x, self.y,"**************")
             self.execute()
         # print(self.x, self.y)
 

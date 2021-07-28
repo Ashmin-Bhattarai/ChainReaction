@@ -171,25 +171,27 @@ def call_join_start(
         first_time = True
 
         while True:
-            clock.tick(5)
+            clock.tick(60)
+            print("x=", cells.x, "y=", cells.y)
             x, y, gamestart = n.send([cells.x, cells.y, cells.played])
-            print("x=", x, "y=", y)
-            # print (gamestart)
+            # print("x=", x, "y=", y)
             if first_time:
                 cord_list.insert(0, [x, y])
+
             else:
                 cord_list.insert(0, [x, y])
                 if len(cord_list) > 2:
                     cord_list.pop()
-                print("cordlist 0 , 1=", cord_list[0], cord_list[1])
+                # print("cordlist=", cord_list[0], cord_list[1])
 
             if not first_time:
-                if cord_list[0] != cord_list[1]:
-                    print("Execute")
+                if cord_list[0] != cord_list[1] and cells.played == False:
+                    # print("Execute")
                     cells.x = x
                     cells.y = y
                     cells.execute()
-            cells.played = False
+                else:
+                    cells.played = False
             first_time = False
 
     start_new_thread(client, ())

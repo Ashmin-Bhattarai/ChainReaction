@@ -50,7 +50,7 @@ def server_run():
     def threaded_client(conn):
         global playerindex, x, y, played, playerChange, player_count, max_player, cells, grid_size
         run = True
-        isHost = pickle.loads(conn.recv(2048))
+        isHost = pickle.loads(conn.recv(1024))
         if isHost[0]:
             max_player = isHost[1]
             grid_size = isHost[2]
@@ -65,7 +65,7 @@ def server_run():
         while run:
             # clock.tick(60)
             try:
-                Tx, Ty, Tplayed = pickle.loads(conn.recv(2048))
+                Tx, Ty, Tplayed = pickle.loads(conn.recv(1024))
                 # print(playerindex,x,y,played)
                 # playerChange=False
                 if Tplayed == True:
@@ -80,7 +80,7 @@ def server_run():
             except socket.error as e:
                 print("disconnected")
                 run = False
-        playerindex = x = y = -1
+        # playerindex = x = y = -1
         played = False
         playerChange = False
         player_count -= 1

@@ -23,6 +23,8 @@ for style in ["W.TButton", "W.TCheckbutton", "W.TLabel", "W.TEntry"]:
 
 button_style.map("W.TButton", background=[("active", "#00FABC")])
 
+sound_option = tk.IntVar()
+
 
 def image_frame():
     main_image_frame = ttk.Label(root, image=img)
@@ -76,15 +78,8 @@ def settings_page():
     image_frame()
     button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
     button_frame.place(x=353.7, y=512)
-    play_sound = tk.StringVar()
     sound_button = ttk.Checkbutton(
-        button_frame,
-        text="Sound",
-        style="W.TCheckbutton",
-        command=lambda: print(play_sound.get()),
-        variable=play_sound,
-        onvalue="True",
-        offvalue="False",
+        button_frame, text="Sound", style="W.TCheckbutton", variable=sound_option
     )
     sound_button.grid(column=0, row=0, sticky=tk.W)
     back_button = ttk.Button(
@@ -96,12 +91,10 @@ def settings_page():
 
 def offline_page():
     widget_destroy(root)
-    mainScreen(root, home_page, image_frame, button_style)
+    mainScreen(root, home_page, image_frame, button_style, sound_option)
 
 
 def join_page(isHost):
-    # widget_destroy(root)
-    # call_join(root, mainScreen, widget_destroy, home_page, image_frame, "2", "8", button_style,isHost)
     call_join(
         root, local_page, widget_destroy, image_frame, button_style, home_page, isHost
     )

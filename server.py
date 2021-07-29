@@ -13,7 +13,7 @@ grid_size = 8
 direct_run = False
 
 
-def server_run():
+def server_run(sound_option):
     global player_count
 
     game_start = False
@@ -21,7 +21,7 @@ def server_run():
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
     server = ipaddress
-    port = 5555
+    port = 25565
     # port = 5555
     # print(server)
 
@@ -46,7 +46,7 @@ def server_run():
         for i in range(0, max_player + 1):
             players.append(Player(i, colors[i]))
         # print("inside function=",grid_size)
-        cells = Grid(grid_size, players, max_player + 1)
+        cells = Grid(grid_size, players, max_player + 1, sound_option)
 
     def threaded_client(conn):
         global playerindex, x, y, played, playerChange, player_count, max_player, cells, grid_size
@@ -118,7 +118,7 @@ def server_run():
 
     while True:
         conn, addr = s.accept()
-        # print("connected to: ", addr)
+        print("connected to: ", addr)
         player_count += 1
         start_new_thread(threaded_client, (conn,))
 

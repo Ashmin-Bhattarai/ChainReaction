@@ -11,46 +11,81 @@ player = 1
 cells = 0
 
 
-def call_this(root, mainScreen, widget_destroy, home_page, image_frame, player_number, grid_size, button_style, sound_option):
+def call_this(
+    root,
+    mainScreen,
+    widget_destroy,
+    home_page,
+    image_frame,
+    player_number,
+    grid_size,
+    button_style,
+    sound_option,
+):
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
 
     def newgame_function():
         widget_destroy(root)
-        call_this(root, mainScreen, widget_destroy, home_page, image_frame,
-                  player_number - 1, grid_size, button_style, sound_option)
+        call_this(
+            root,
+            mainScreen,
+            widget_destroy,
+            home_page,
+            image_frame,
+            player_number - 1,
+            grid_size,
+            button_style,
+            sound_option,
+        )
 
     def back_function():
         mainScreen(root, home_page, image_frame, button_style, sound_option)
 
     button_frame = ttk.Frame(root)
-    button_frame.pack(fill='both')
+    button_frame.pack(fill="both")
 
     newgame_button = ttk.Button(
-        button_frame, text='New Game', style='W.TButton', command=newgame_function)
-    back_button = ttk.Button(button_frame, text='Back',
-                             style='W.TButton', command=back_function)
+        button_frame, text="New Game", style="W.TButton", command=newgame_function
+    )
+    back_button = ttk.Button(
+        button_frame, text="Back", style="W.TButton", command=back_function
+    )
     newgame_button.grid(column=0, row=0, padx=5, sticky=tk.EW)
     back_button.grid(column=1, row=0, padx=5, sticky=tk.EW)
 
-    ttk.Separator(orient='horizontal').pack()
+    ttk.Separator(orient="horizontal").pack()
 
     players = []
     for i in range(0, player_number):
         players.append(Player(i, colors[i]))
 
-    c = tk.Canvas(root, height=root.winfo_height(),
-                  width=root.winfo_width(), bg='white')
+    c = tk.Canvas(
+        root, height=root.winfo_height(), width=root.winfo_width(), bg="white"
+    )
     c.pack()
 
     cells = Grid(grid_size, players, player_number, sound_option)
     cells.set_c(c)
-    c.bind('<Configure>', cells.grid)
-    c.bind('<Button-1>', cells.numbering)
+    c.bind("<Configure>", cells.grid)
+    c.bind("<Button-1>", cells.numbering)
     root.mainloop()
 
 
-def call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, player_number, grid_size, button_style, isHost, ipaddress, sound_option):
+def call_join_start(
+    root,
+    local_page,
+    call_join,
+    widget_destroy,
+    home_page,
+    image_frame,
+    player_number,
+    grid_size,
+    button_style,
+    isHost,
+    ipaddress,
+    sound_option,
+):
     global cells
     # print("call_join_start ip address=",ipaddress)
     player_number, grid_size = int(player_number) + 1, int(grid_size)
@@ -58,20 +93,46 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
 
     def newgame_function():
         widget_destroy(root)
-        call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, player_number - 1, grid_size, button_style, isHost, ipaddress, sound_option)
+        call_join_start(
+            root,
+            local_page,
+            call_join,
+            widget_destroy,
+            home_page,
+            image_frame,
+            player_number - 1,
+            grid_size,
+            button_style,
+            isHost,
+            ipaddress,
+            sound_option,
+        )
 
     def back_function():
-        call_join(root, local_page, widget_destroy, image_frame, button_style, home_page, isHost, sound_option)
+        call_join(
+            root,
+            local_page,
+            widget_destroy,
+            image_frame,
+            button_style,
+            home_page,
+            isHost,
+            sound_option,
+        )
 
     button_frame = ttk.Frame(root)
-    button_frame.pack(fill='both')
+    button_frame.pack(fill="both")
 
-    newgame_button = ttk.Button(button_frame, text='New Game', style='W.TButton', command=newgame_function)
-    back_button = ttk.Button(button_frame, text='Back', style='W.TButton', command=back_function)
+    newgame_button = ttk.Button(
+        button_frame, text="New Game", style="W.TButton", command=newgame_function
+    )
+    back_button = ttk.Button(
+        button_frame, text="Back", style="W.TButton", command=back_function
+    )
     newgame_button.grid(column=0, row=0, padx=5, sticky=tk.N)
     back_button.grid(column=1, row=0, padx=5, sticky=tk.N)
 
-    ttk.Separator(orient='horizontal').pack()
+    ttk.Separator(orient="horizontal").pack()
 
     # players = []
     # for i in range(0, player_number):
@@ -82,8 +143,9 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
     if isHost == True:
         start_new_thread(server_start, ())
 
-    c = tk.Canvas(root, height=root.winfo_height(),
-                  width=root.winfo_width(), bg='white')
+    c = tk.Canvas(
+        root, height=root.winfo_height(), width=root.winfo_width(), bg="white"
+    )
     c.pack()
     # cells = Grid(grid_size, c, players, 3)
     n = Network()
@@ -99,8 +161,8 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
     # print(cells.myid)
 
     cells.set_c(c)
-    c.bind('<Configure>', cells.grid)
-    c.bind('<Button-1>', cells.numbering)
+    c.bind("<Configure>", cells.grid)
+    c.bind("<Button-1>", cells.numbering)
     # print("Client thread started:")
 
     def client():
@@ -109,21 +171,36 @@ def call_join_start(root, local_page, call_join, widget_destroy, home_page, imag
         tmpy = -1
 
         clock = pygame.time.Clock()
+        cord_list = []
+        first_time = True
 
         while True:
-            clock.tick(10)
-            x, y, gamestart = n.send([cells.x, cells.y, cells.played])
-            # print (gamestart)
+            clock.tick(30)
+            print("x=", cells.x, "y=", cells.y, "played=", cells.played)
+            x, y, gamestart = n.send([cells.x, cells.y])
 
-            if not (tmpx == x and tmpy == y) and cells.played == False:
-                # cells.playerIndex=nextplayer
-                # print(" x=", x, "y=", y)
-                cells.x = x
-                cells.y = y
-                cells.execute()
-            cells.played = False
-            tmpx = x
-            tmpy = y
+            # print("x=", x, "y=", y)
+            if first_time:
+                cord_list.insert(0, [x, y])
+
+            else:
+                cord_list.insert(0, [x, y])
+                if len(cord_list) > 2:
+                    cord_list.pop()
+                # print("cordlist=", cord_list[0], cord_list[1])
+
+            if not first_time:
+                if (cord_list[0] != cord_list[1]) and (
+                    cord_list[0] != [cells.x, cells.y]
+                ):
+                    # print("Execute")
+                    cells.x = x
+                    cells.y = y
+                    cells.execute()
+                # elif cells.played == True:
+                #     cells.played = False
+
+            first_time = False
 
     start_new_thread(client, ())
     root.mainloop()

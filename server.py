@@ -10,9 +10,10 @@ player_count = 0
 max_player = 2
 cells = 0
 grid_size = 8
+direct_run = False
 
 
-def server_run(sound_option):
+def server_run():
     global player_count
 
     game_start = False
@@ -20,7 +21,7 @@ def server_run(sound_option):
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
     server = ipaddress
-    port = 25565
+    port = 5555
     # port = 5555
     # print(server)
 
@@ -45,12 +46,16 @@ def server_run(sound_option):
         for i in range(0, max_player + 1):
             players.append(Player(i, colors[i]))
         # print("inside function=",grid_size)
-        cells = Grid(grid_size, players, max_player + 1, sound_option)
+        cells = Grid(grid_size, players, max_player + 1)
 
     def threaded_client(conn):
         global playerindex, x, y, played, playerChange, player_count, max_player, cells, grid_size
         run = True
         isHost = pickle.loads(conn.recv(2048))
+        if direct_run == True:
+            isHost[0] = True
+            isHost.append(max_player)
+            isHost.append(grid_size)
         if isHost[0]:
             max_player = isHost[1]
             grid_size = isHost[2]
@@ -62,24 +67,49 @@ def server_run(sound_option):
             host_initialize()
         # print("grid size=",cells.size)
         conn.sendall(pickle.dumps([cells, player_count]))
+        cord_list = []
+        first_time = True
         while run:
-            # clock.tick(60)
+            # clock.tick(20)
             try:
-                Tx, Ty, Tplayed = pickle.loads(conn.recv(2048))
+                Tx, Ty = pickle.loads(conn.recv(2048))
+                # print("x=", Tx, "y=", Ty, "played=", Tplayed)
                 # print(playerindex,x,y,played)
                 # playerChange=False
-                if Tplayed == True:
-                    x = Tx
-                    y = Ty
+
+                if first_time:
+                    cord_list.insert(0, [Tx, Ty])
+
+                else:
+                    cord_list.insert(0, [Tx, Ty])
+                    if len(cord_list) > 2:
+                        cord_list.pop()
+                    # print("cordlist=", cord_list[0], cord_list[1])
+
+                if not first_time:
+                    if cord_list[0] != cord_list[1]:
+                        # print("Execute")
+                        x = Tx
+                        y = Ty
+
+                    # elif cells.played == True:
+                    #     cells.played = False
+
+                first_time = False
+
+                # if Tplayed == True:
+                #     x = Tx
+                #     y = Ty
                 if player_count != max_player:
                     game_start = False
                 else:
                     game_start = True
                 conn.sendall(pickle.dumps([x, y, game_start]))
+                Tplayed = False
             except socket.error as e:
                 print("disconnected")
                 run = False
-        playerindex = x = y = -1
+        # playerindex = x = y = -1
         played = False
         playerChange = False
         player_count -= 1
@@ -88,7 +118,7 @@ def server_run(sound_option):
 
     while True:
         conn, addr = s.accept()
-        print("connected to: ", addr)
+        # print("connected to: ", addr)
         player_count += 1
         start_new_thread(threaded_client, (conn,))
 
@@ -96,4 +126,5 @@ def server_run(sound_option):
 if __name__ == "__main__":
     max_player = 2
     grid_size = 8
+    direct_run = True
     server_run()

@@ -67,16 +67,39 @@ def server_run():
             host_initialize()
         # print("grid size=",cells.size)
         conn.sendall(pickle.dumps([cells, player_count]))
+        cord_list = []
+        first_time = True
         while run:
-            clock.tick(20)
+            # clock.tick(20)
             try:
-                Tx, Ty, Tplayed = pickle.loads(conn.recv(2048))
+                Tx, Ty = pickle.loads(conn.recv(2048))
                 # print("x=", Tx, "y=", Ty, "played=", Tplayed)
                 # print(playerindex,x,y,played)
                 # playerChange=False
-                if Tplayed == True:
-                    x = Tx
-                    y = Ty
+
+                if first_time:
+                    cord_list.insert(0, [Tx, Ty])
+
+                else:
+                    cord_list.insert(0, [Tx, Ty])
+                    if len(cord_list) > 2:
+                        cord_list.pop()
+                    # print("cordlist=", cord_list[0], cord_list[1])
+
+                if not first_time:
+                    if cord_list[0] != cord_list[1]:
+                        # print("Execute")
+                        x = Tx
+                        y = Ty
+
+                    # elif cells.played == True:
+                    #     cells.played = False
+
+                first_time = False
+
+                # if Tplayed == True:
+                #     x = Tx
+                #     y = Ty
                 if player_count != max_player:
                     game_start = False
                 else:

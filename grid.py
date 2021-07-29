@@ -328,6 +328,7 @@ class Grid(explode.Explode):
             print("**************numbering: ", self.x, self.y, "**************")
             if self.isvalid(self.x, self.y):
                 self.played = True
+                print("inside valid=",self.played)
             self.execute()
         # print(self.x, self.y)
 

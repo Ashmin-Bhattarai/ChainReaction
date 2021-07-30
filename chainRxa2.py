@@ -175,25 +175,25 @@ def call_join_start(
         first_time = True
 
         while True:
-            clock.tick(30)
-            print("x=", cells.x, "y=", cells.y, "played=", cells.played)
-            x, y, gamestart = n.send([cells.x, cells.y])
+            clock.tick(60)
+            # print("x=", cells.x, "y=", cells.y, "played=", cells.played)
+            x, y, gamestart, I = n.send([cells.x, cells.y, cells.playerIndex])
 
-            # print("x=", x, "y=", y)
+            print("x=", x, "y=", y, "Index=", I)
             if first_time:
-                cord_list.insert(0, [x, y])
+                cord_list.insert(0, [x, y, I])
 
             else:
-                cord_list.insert(0, [x, y])
+                cord_list.insert(0, [x, y, I])
                 if len(cord_list) > 2:
                     cord_list.pop()
                 # print("cordlist=", cord_list[0], cord_list[1])
-
+                print("cord_list[0][2]=", cord_list[0][2])
+                print("cord_list[1][2]=", cord_list[1][2])
             if not first_time:
-                if (cord_list[0] != cord_list[1]) and (
-                    cord_list[0] != [cells.x, cells.y]
-                ):
-                    # print("Execute")
+                if cord_list[0][2] != cord_list[1][2] and cord_list[0][2] == cells.myid:
+
+                    print("Execute")
                     cells.x = x
                     cells.y = y
                     cells.execute()

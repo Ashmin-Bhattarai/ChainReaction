@@ -11,10 +11,11 @@ max_player = 2
 cells = 0
 grid_size = 8
 direct_run = False
+p = -1
 
 
 def server_run(sound_option):
-    global player_count
+    global player_count, p
 
     game_start = False
 
@@ -34,7 +35,7 @@ def server_run(sound_option):
 
     s.listen()
 
-    global playerindex, x, y, played, playerChange
+    global playerindex, x, y, played, playerChange, p
     playerindex = x = y = -1
     played = False
     playerChange = False
@@ -49,7 +50,7 @@ def server_run(sound_option):
         cells = Grid(grid_size, players, max_player + 1, sound_option)
 
     def threaded_client(conn):
-        global playerindex, x, y, played, playerChange, player_count, max_player, cells, grid_size
+        global playerindex, x, y, played, playerChange, player_count, max_player, cells, grid_size, p
         run = True
         isHost = pickle.loads(conn.recv(2048))
         if direct_run == True:
@@ -72,16 +73,16 @@ def server_run(sound_option):
         while run:
             # clock.tick(20)
             try:
-                Tx, Ty = pickle.loads(conn.recv(2048))
-                # print("x=", Tx, "y=", Ty, "played=", Tplayed)
+                Tx, Ty, TI = pickle.loads(conn.recv(2048))
+                # print("x=", Tx, "y=", Ty, "Index=", TI)
                 # print(playerindex,x,y,played)
                 # playerChange=False
 
                 if first_time:
-                    cord_list.insert(0, [Tx, Ty])
+                    cord_list.insert(0, [Tx, Ty, TI])
 
                 else:
-                    cord_list.insert(0, [Tx, Ty])
+                    cord_list.insert(0, [Tx, Ty, TI])
                     if len(cord_list) > 2:
                         cord_list.pop()
                     # print("cordlist=", cord_list[0], cord_list[1])
@@ -91,6 +92,7 @@ def server_run(sound_option):
                         # print("Execute")
                         x = Tx
                         y = Ty
+                        p = TI
 
                     # elif cells.played == True:
                     #     cells.played = False
@@ -104,7 +106,7 @@ def server_run(sound_option):
                     game_start = False
                 else:
                     game_start = True
-                conn.sendall(pickle.dumps([x, y, game_start]))
+                conn.sendall(pickle.dumps([x, y, game_start, p]))
                 Tplayed = False
             except socket.error as e:
                 print("disconnected")

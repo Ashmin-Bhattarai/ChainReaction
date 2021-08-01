@@ -129,4 +129,4 @@ if __name__ == "__main__":
     max_player = 2
     grid_size = 8
     direct_run = True
-    server_run()
+    server_run(1)

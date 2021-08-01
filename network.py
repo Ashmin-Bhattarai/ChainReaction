@@ -13,7 +13,7 @@ class Network:
         try:
             self.addr = (self.server, self.port)
             self.client.connect(self.addr)
-        
+
         except ConnectionRefusedError:
             print("Server is OFFLINE !!!")
 

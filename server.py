@@ -10,12 +10,11 @@ player_count = 0
 max_player = 2
 cells = 0
 grid_size = 8
+game_start = False
 
 
 def server_run(sound_option):
-    global player_count
-
-    game_start = False
+    global player_count, game_start
 
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)

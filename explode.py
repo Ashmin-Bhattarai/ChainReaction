@@ -1,4 +1,5 @@
 import pygame
+import threading
 import sys
 import time
 
@@ -403,55 +404,73 @@ class Explode:
                 # print("satisfy")
                 #self.animate_corner(tag, 1, 0, 0, 1)
                 self.blastList.append([x, y, 2, [[1, 0], [0, 1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # Upper Right Corner
             elif x == self.size - 1 and y == 0 and self.cells[x][y][0] >= 2:
                 # self.animate_corner(tag, -1, 0, 0, 1)
                 self.blastList.append([x, y, 2, [[-1, 0], [0, 1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # lower left corner
             elif x == 0 and y == self.size - 1 and self.cells[x][y][0] >= 2:
                 # self.animate_corner(tag, 1, 0, 0, -1)
                 self.blastList.append([x, y, 2, [[1, 0], [0, -1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # lower right corner
             elif x == self.size - 1 and y == self.size - 1 and self.cells[x][y][0] >= 2:
                 # self.animate_corner(tag, -1, 0, 0, -1)
                 self.blastList.append([x, y, 2, [[-1, 0], [0, -1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # left edge
             elif x == 0 and y in range(1, self.size - 1) and self.cells[x][y][0] >= 3:
                 # self.animate_edge(tag, 0, 1, 1, 0, 0, -1)
                 self.blastList.append([x, y, 3, [[0, 1], [1, 0], [0, -1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # right edge
             elif (x == self.size - 1 and y in range(1, self.size - 1) and self.cells[x][y][0] >= 3):
                 # self.animate_edge(tag, -1, 0, 0, 1, 0, -1)
                 self.blastList.append([x, y, 3, [[-1, 0], [0, 1], [0, -1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # upper edge
             elif y == 0 and x in range(1, self.size - 1) and self.cells[x][y][0] >= 3:
                 # self.animate_edge(tag, -1, 0, 1, 0, 0, 1)
                 self.blastList.append([x, y, 3, [[-1, 0], [1, 0], [0, 1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # lower edge
             elif (y == self.size - 1 and x in range(1, self.size - 1) and self.cells[x][y][0] >= 3):
                 # self.animate_edge(tag, -1, 0, 1, 0, 0, -1)
                 self.blastList.append([x, y, 3, [[-1, 0], [1, 0], [0, -1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # middle
             elif (x in range(1, self.size - 1) and y in range(1, self.size - 1) and self.cells[x][y][0] >= 4):
                 # self.animate_middle(tag, -1, 0, 1, 0, 0, -1, 0, 1)
                 self.blastList.append([x, y, 4, [[-1, 0], [1, 0], [0, -1], [0, 1]]])
-                play_sound()
+                # play_sound()
+                sound = threading.Thread(target=play_sound, args=())  # , daemon=True)
+                sound.start()
 
             # else:
             #     print("Else condition")

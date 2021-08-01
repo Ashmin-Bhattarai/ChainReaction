@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 from chainRxa2 import call_join_start
 
+
 selected_playersize = 2
 selected_gridSize = 8
 values = [i for i in range(2, 11)]
@@ -14,10 +15,8 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
     ipaddress = socket.gethostbyname(hostname)
 
     def start(ip):
-        # print(selected_playersize, selected_gridSize)
         if len(ip) == 0:
             ip = ipaddress
-        # print("from start=",ip)
         call_join_start(root, local_page, call_join, widget_destroy, home_page, image_frame, selected_playersize, selected_gridSize, button_style, isHost, ip, sound_option)
 
     widget_destroy(root)
@@ -26,6 +25,7 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
     new_frame = ttk.Frame(root, relief='raised', borderwidth=2)
     new_frame.place(x=210, y=512.5)
     text = "IP Address: "
+    ipaddr = tk.StringVar()
 
     def total_player(event):
         global selected_playersize
@@ -35,15 +35,11 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
         global selected_gridSize
         selected_gridSize = grid_size.get()
 
-    ipaddr = tk.StringVar()
-
     if not isHost:
 
         ip_label = ttk.Label(new_frame, style='W.TLabel', text=text)
         ip_label.grid(column=0, row=0, padx=5, sticky=tk.N)
 
-        # ipaddr = tk.StringVar()
-    # ipaddress.set("192.168.000.000")
         ip_entry = ttk.Entry(new_frame, textvariable=ipaddr, style='W.TEntry', width=30)
         ip_entry.grid(column=1, row=0, sticky=tk.W)
 
@@ -55,10 +51,6 @@ def call_join(root, local_page, widget_destroy, image_frame, button_style, home_
         # ipaddress = ipaddr.get()
 
     else:
-        text = f'Your IP Address is: {ipaddress}'
-
-        ip_label = ttk.Label(new_frame, style='W.TLabel', text=text)
-        ip_label.grid(column=0, row=0, padx=5, sticky=tk.N)
 
         player_size = ttk.Combobox(new_frame)
         player_size['values'] = values[:7]

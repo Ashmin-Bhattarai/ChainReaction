@@ -3,6 +3,7 @@ import tkinter as tk
 from tkinter import ttk
 
 values = [i for i in range(2, 11)]
+
 selectedPlayer = 2
 selectedGridSize = 8
 
@@ -12,12 +13,7 @@ def widget_destroy(root):
         widgets.destroy()
 
 
-# def join_start(root, home_page, image_frame, button_style):
-#     call_join(root, mainScreen, widget_destroy, home_page, image_frame,
-#               selectedPlayer, selectedGridSize, button_style)
-
-
-def mainScreen(root, home_page, image_frame, button_style):
+def mainScreen(root, home_page, image_frame, button_style, sound_option):
     def playerSelected(event):
         global selectedPlayer
         selectedPlayer = no_of_players.get()
@@ -38,6 +34,7 @@ def mainScreen(root, home_page, image_frame, button_style):
             selectedPlayer,
             selectedGridSize,
             button_style,
+            sound_option,
         )
 
     widget_destroy(root)

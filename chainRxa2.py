@@ -8,7 +8,6 @@ from server import *
 from player import *
 
 player = 1
-
 cells = 0
 
 
@@ -21,6 +20,7 @@ def call_this(
     player_number,
     grid_size,
     button_style,
+    sound_option,
 ):
     player_number, grid_size = int(player_number) + 1, int(grid_size)
     # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
@@ -36,10 +36,11 @@ def call_this(
             player_number - 1,
             grid_size,
             button_style,
+            sound_option,
         )
 
     def back_function():
-        mainScreen(root, home_page, image_frame, button_style)
+        mainScreen(root, home_page, image_frame, button_style, sound_option)
 
     button_frame = ttk.Frame(root)
     button_frame.pack(fill="both")
@@ -64,7 +65,7 @@ def call_this(
     )
     c.pack()
 
-    cells = Grid(grid_size, players, player_number)
+    cells = Grid(grid_size, players, player_number, sound_option)
     cells.set_c(c)
     c.bind("<Configure>", cells.grid)
     c.bind("<Button-1>", cells.numbering)
@@ -83,6 +84,7 @@ def call_join_start(
     button_style,
     isHost,
     ipaddress,
+    sound_option,
 ):
     global cells
     # print("call_join_start ip address=",ipaddress)
@@ -103,6 +105,7 @@ def call_join_start(
             button_style,
             isHost,
             ipaddress,
+            sound_option,
         )
 
     def back_function():
@@ -114,6 +117,7 @@ def call_join_start(
             button_style,
             home_page,
             isHost,
+            sound_option,
         )
 
     button_frame = ttk.Frame(root)
@@ -134,7 +138,7 @@ def call_join_start(
     # for i in range(0, player_number):
     #     players.append(Player(i, colors[i]))
     def server_start():
-        server_run()
+        server_run(sound_option)
 
     if isHost == True:
         start_new_thread(server_start, ())
@@ -151,10 +155,7 @@ def call_join_start(
         server_get = n.send([isHost])
     else:
         server_get = n.send([isHost, player_number - 1, grid_size])
-    print("server_get=", server_get)
     cells = server_get[0]
-    print("player number:", cells.player_number)
-    print("grid size:", cells.size)
     cells.myid = server_get[1]
     cells.isOnline = True
     # print(cells.myid)
@@ -174,25 +175,28 @@ def call_join_start(
         first_time = True
 
         while True:
-            clock.tick(30)
-            print("x=", cells.x, "y=", cells.y, "played=", cells.played)
-            x, y, gamestart = n.send([cells.x, cells.y])
+            clock.tick(60)
+            # print("x=", cells.x, "y=", cells.y, "played=", cells.played)
+            x, y, gamestart, I = n.send([cells.x, cells.y, cells.playerIndex])
 
-            # print("x=", x, "y=", y)
+            print("x=", x, "y=", y, "Index=", I)
             if first_time:
-                cord_list.insert(0, [x, y])
+                cord_list.insert(0, [x, y, I])
 
             else:
-                cord_list.insert(0, [x, y])
+                cord_list.insert(0, [x, y, I])
                 if len(cord_list) > 2:
                     cord_list.pop()
                 # print("cordlist=", cord_list[0], cord_list[1])
-
+                print("cord_list[0][2]=", cord_list[0][2])
+                print("cord_list[1][2]=", cord_list[1][2])
             if not first_time:
-                if (cord_list[0] != cord_list[1]) and (
-                    cord_list[0] != [cells.x, cells.y]
+                if (
+                    cord_list[0][2] != cord_list[1][2]
+                    and cord_list[0][2] != cells.player
                 ):
-                    # print("Execute")
+
+                    print("Execute")
                     cells.x = x
                     cells.y = y
                     cells.execute()

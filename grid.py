@@ -1,17 +1,13 @@
-import tkinter as tk
-import time
 import explode
-import threading
 
 
 class Grid(explode.Explode):
-    def __init__(self, size, players, player_number):
+    def __init__(self, size, players, player_number, sound_option=0):
         self.size = size
         self.player = 1
         self.cord_list = []
-        self.cells = [
-            [[0 for cell in range(2)] for col in range(size)] for row in range(size)
-        ]
+        self.cord_list2 = []
+        self.cells = [[[0 for cell in range(2)] for col in range(size)] for row in range(size)]
         self.players = players
         self.player_number = player_number
         self.playerIndex = 1
@@ -22,6 +18,8 @@ class Grid(explode.Explode):
         self.y = -1
         self.myid = -1
         self.isOnline = False
+        self.sound_option = sound_option
+        
 
     def set_c(self, c):
         self.c = c
@@ -76,6 +74,7 @@ class Grid(explode.Explode):
                 (self.yd * y + self.yd / 2 + ballSize),
             )
             self.c.create_oval(x1, y1, x2, y2, fill=self.fill_color, tag=tag + "1")
+            # print("Drawing1 ", tag + "1")
             self.c.update()
 
         elif self.cells[x][y][0] == 2:
@@ -337,28 +336,19 @@ class Grid(explode.Explode):
             # self.played = True
             self.cells[self.x][self.y][0] += 1
             self.cells[self.x][self.y][1] = self.player
-            self.cord_list = [[self.x, self.y]]
-            # print(self.cells[self.x][self.y])
-            # print("x,y, v = ", self.x, self.y, self.cells[self.x][self.y][0])
+
+            # self.cord_list = [[self.x, self.y]]
+            self.cord_list2 = [[[self.x, self.y]]]
 
             self.drawCircles(self.x, self.y)
-
-            # def test():
-            #     self.explode()
-
-            # thread = []
-            # i=0
-            while len(self.cord_list) != 0:
-                # thread.append(threading.Thread(target = test))
-                # thread[i].start()
-                # i += 1
-                self.explode()
-                # self.play_sound('soundeffects/explode.wav')
-            # for t in thread:
-            #     t.join()
+            # self.explode2()
+            # print(len(self.cord_list2))
+            while len(self.cord_list2) != 0:
+                # print(len(self.cord_list2))
+                self.explode2()
 
             self.checkstatus()
-            # print("before")
+
             self.playerIndex += 1
             # print("player index=", self.playerIndex, "player number=", self.player_number)
             # print("after")

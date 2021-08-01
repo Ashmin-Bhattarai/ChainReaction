@@ -9,7 +9,14 @@ values = [i for i in range(2, 11)]
 
 
 def call_join(
-    root, local_page, widget_destroy, image_frame, button_style, home_page, isHost
+    root,
+    local_page,
+    widget_destroy,
+    image_frame,
+    button_style,
+    home_page,
+    isHost,
+    sound_option,
 ):
 
     hostname = socket.gethostname()
@@ -32,6 +39,7 @@ def call_join(
             button_style,
             isHost,
             ip,
+            sound_option,
         )
 
     widget_destroy(root)
@@ -50,6 +58,7 @@ def call_join(
         selected_gridSize = grid_size.get()
 
     ipaddr = tk.StringVar()
+
     if not isHost:
 
         ip_label = ttk.Label(new_frame, style="W.TLabel", text=text)

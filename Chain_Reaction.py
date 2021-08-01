@@ -11,7 +11,9 @@ root.geometry("800x800")
 root.resizable(0, 0)
 font = {"font": ("Arial", 10, "bold"), "background": "#EE018B"}
 
-img = ImageTk.PhotoImage(Image.open("mainMenu.jpg"))
+img = ImageTk.PhotoImage(Image.open("images/mainMenu.jpg"))
+on_img = ImageTk.PhotoImage(Image.open("images/on_accent.png"))
+off_img = ImageTk.PhotoImage(Image.open("images/off_accent.png"))
 
 button_style = ttk.Style()
 button_style.theme_use("clam")
@@ -23,7 +25,8 @@ for style in ["W.TButton", "W.TCheckbutton", "W.TLabel", "W.TEntry"]:
 
 button_style.map("W.TButton", background=[("active", "#00FABC")])
 
-sound_option = tk.IntVar(value=0)
+sound_option = True
+previous_img = on_img
 
 
 def image_frame():
@@ -76,22 +79,41 @@ def local_page():
 def settings_page():
     widget_destroy(root)
     image_frame()
+
+    def toggle():
+        global sound_option, previous_img
+
+        if sound_option:
+            sound_button.config(image=off_img)
+            sound_option = False
+            previous_img = off_img
+
+        else:
+            sound_button.config(image=on_img)
+            sound_option = True
+            previous_img = on_img
+
     button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    button_frame.place(x=353.7, y=512)
-    sound_button = ttk.Checkbutton(
-        button_frame, text="Sound", style="W.TCheckbutton", variable=sound_option
-    )
-    sound_button.grid(column=0, row=0, sticky=tk.W)
+    # button_frame.place(x=353.7, y=512)
+    button_frame.place(x=317.5, y=512)
+    sound_label = ttk.Label(button_frame, style="W.TLabel", text='Sound')
+    sound_label.grid(column=0, row=0, sticky=tk.W)
+    sound_button = tk.Button(button_frame, image=previous_img, bd=0, command=toggle)
+    sound_button.grid(column=1, row=0, sticky=tk.E)
     back_button = ttk.Button(
         button_frame, text="Back", style="W.TButton", command=home_page
     )
     back_button.grid(column=0, row=1, sticky=tk.W)
+
+    for widget in button_frame.winfo_children():
+        widget.grid(padx=5, pady=3)
+
     root.mainloop()
 
 
 def offline_page():
     widget_destroy(root)
-    mainScreen(root, home_page, image_frame, button_style, sound_option.get())
+    mainScreen(root, home_page, image_frame, button_style, sound_option)
 
 
 def join_page(isHost):
@@ -103,7 +125,7 @@ def join_page(isHost):
         button_style,
         home_page,
         isHost,
-        sound_option.get(),
+        sound_option,
     )
 
 

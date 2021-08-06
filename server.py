@@ -74,9 +74,11 @@ def server_run(sound_option):
             playerChange = False
             player_count -= 1
             conn.close()
+            sys.exit()
         cord_list = []
         first_time = True
         while run:
+            print("Max_player=", max_player, "player_count", player_count)
             # clock.tick(20)
             try:
                 Tx, Ty, TI = pickle.loads(conn.recv(2048))

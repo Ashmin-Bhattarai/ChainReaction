@@ -169,7 +169,7 @@ def call_join_start(
 
         def cancel():
             global game_start
-            print(f"inside cancel game_start = {game_start}")
+            # print(f"inside cancel game_start = {game_start}")
             if game_start:
                 call_again()
             root.after(1000, cancel)
@@ -185,19 +185,17 @@ def call_join_start(
 
     # cells = Grid(grid_size, c, players, 3)
 
-    
     n = Network()
     n.server = ipaddress
     n.connect()
 
-    if not isHost:
-        print("true")
-        server_get = n.send([isHostOnly, isHost])
-    else:
-        print("false")
-        server_get = n.send([isHostOnly, isHost, player_number - 1, grid_size])
-        
     if not isHostOnly:
+        if not isHost:
+            print("true")
+            server_get = n.send([isHostOnly, isHost])
+        else:
+            print("false")
+            server_get = n.send([isHostOnly, isHost, player_number - 1, grid_size])
         cells = server_get[0]
         print(type(cells))
         cells.myid = server_get[1]
@@ -217,8 +215,8 @@ def call_join_start(
                 clock.tick(60)
                 # print("x=", cells.x, "y=", cells.y, "played=", cells.played)
                 x, y, game_start, I = n.send([cells.x, cells.y, cells.playerIndex])
-
-                print("x=", x, "y=", y, "Index=", I)
+                print(game_start)
+                # print("x=", x, "y=", y, "Index=", I)
                 if first_time:
                     cord_list.insert(0, [x, y, I])
 
@@ -227,8 +225,8 @@ def call_join_start(
                     if len(cord_list) > 2:
                         cord_list.pop()
                     # print("cordlist=", cord_list[0], cord_list[1])
-                    print("cord_list[0][2]=", cord_list[0][2])
-                    print("cord_list[1][2]=", cord_list[1][2])
+                    # print("cord_list[0][2]=", cord_list[0][2])
+                    # print("cord_list[1][2]=", cord_list[1][2])
                 if not first_time:
                     if (
                         cord_list[0][2] != cord_list[1][2]
@@ -247,6 +245,14 @@ def call_join_start(
         start_new_thread(client, ())
 
         waiting_page()
+
+    else:
+        if not isHost:
+            print("true")
+            server_get = n.send([isHostOnly, isHost])
+        else:
+            print("false")
+            server_get = n.send([isHostOnly, isHost, player_number - 1, grid_size])
     # while not game_start:
     #     print(f'waiting, gamestart = {game_start}')
     # widget_destroy(root)

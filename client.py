@@ -100,22 +100,25 @@ def call_join(
         for widget in new_frame.winfo_children():
             widget.grid(padx=5, pady=3)
 
-        host_only = ttk.Button(new_frame, text="Host Only", style="W.TButton", command=lambda: start(ipaddr.get(), True))
-        host_only.grid(column=2, row=3, padx=5, pady=5, sticky=tk.W)
-
-
+        host_only = ttk.Button(
+            new_frame,
+            text="Host Only",
+            style="W.TButton",
+            command=lambda: start(ipaddr.get(), True),
+        )
+        host_only.grid(column=1, row=3, padx=5, pady=5)
 
     submit_button = ttk.Button(
-        new_frame, text="Submit", style="W.TButton", command=lambda: start(ipaddr.get(), False)
+        new_frame,
+        text="Submit and Play",
+        style="W.TButton",
+        command=lambda: start(ipaddr.get(), False),
     )
-    submit_button.grid(column=0, row=3, padx=5, pady=5, sticky=tk.W)
+    submit_button.grid(column=0, row=3, padx=5, pady=5)
 
     back_button = ttk.Button(
         new_frame, text="Back", style="W.TButton", command=local_page
     )
-    back_button.grid(column=1, row=3, padx=5, pady=5, sticky=tk.E)
-
-    
-
+    back_button.grid(column=2, row=3, padx=5, pady=5)
 
     root.mainloop()

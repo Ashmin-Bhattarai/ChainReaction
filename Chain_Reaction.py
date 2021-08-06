@@ -7,7 +7,7 @@ from PIL import ImageTk, Image
 
 root = tk.Tk()
 root.title("Chain Reaction")
-root.geometry("600x600")
+root.geometry("800x800")
 root.resizable(0, 0)
 font = {"font": ("Arial", 10, "bold"), "background": "#EE018B"}
 
@@ -96,7 +96,7 @@ def settings_page():
     button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
     # button_frame.place(x=353.7, y=512)
     button_frame.place(x=317.5, y=512)
-    sound_label = ttk.Label(button_frame, style="W.TLabel", text='Sound')
+    sound_label = ttk.Label(button_frame, style="W.TLabel", text="Sound")
     sound_label.grid(column=0, row=0, sticky=tk.W)
     sound_button = tk.Button(button_frame, image=previous_img, bd=0, command=toggle)
     sound_button.grid(column=1, row=0, sticky=tk.E)

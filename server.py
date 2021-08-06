@@ -33,10 +33,8 @@ def server_run(sound_option):
 
     s.listen()
 
-    global playerindex, x, y, played, playerChange, p
+    global playerindex, x, y, played, p
     playerindex = x = y = -1
-    played = False
-    playerChange = False
     clock = pygame.time.Clock()
     players = []
 
@@ -47,7 +45,7 @@ def server_run(sound_option):
         cells = Grid(grid_size, players, max_player + 1, sound_option)
 
     def threaded_client(conn):
-        global playerindex, x, y, played, playerChange, player_count, max_player, cells, grid_size, p
+        global playerindex, x, y, player_count, max_player, cells, grid_size, p
         run = True
         isHost = pickle.loads(conn.recv(2048))
         if direct_run == True:
@@ -57,19 +55,18 @@ def server_run(sound_option):
         if isHost[1]:
             max_player = isHost[2]
             grid_size = isHost[3]
-           
+
             host_initialize()
 
         conn.sendall(pickle.dumps([cells, player_count]))
         if isHost[0]:
-            played = False
-            playerChange = False
             player_count -= 1
             conn.close()
             sys.exit()
         cord_list = []
         first_time = True
         while run:
+            print("Player_count",player_count,"max_player",max_player)
             try:
                 Tx, Ty, TI = pickle.loads(conn.recv(2048))
 
@@ -87,7 +84,6 @@ def server_run(sound_option):
                         y = Ty
                         p = TI
 
-
                 first_time = False
 
                 if player_count != max_player:
@@ -95,26 +91,16 @@ def server_run(sound_option):
                 else:
                     game_start = True
                 conn.sendall(pickle.dumps([x, y, game_start, p]))
-                Tplayed = False
             except socket.error as e:
                 print("disconnected")
                 run = False
-        played = False
-        playerChange = False
         player_count -= 1
         conn.close()
         sys.exit()
 
-    while True:
-        print("Server is online")
+    print("Server is online")
+    while True:        
         conn, addr = s.accept()
         print("connected to: ", addr)
         player_count += 1
         start_new_thread(threaded_client, (conn,))
-
-
-if __name__ == "__main__":
-    max_player = 2
-    grid_size = 8
-    direct_run = True
-    server_run(1)

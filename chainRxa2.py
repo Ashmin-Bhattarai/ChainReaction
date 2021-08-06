@@ -205,7 +205,7 @@ def call_join_start(
             while True:
                 clock.tick(60)
                 x, y, game_start, I = n.send([cells.x, cells.y, cells.playerIndex])
-                print(game_start)
+                
                 if first_time:
                     cord_list.insert(0, [x, y, I])
 
@@ -220,7 +220,7 @@ def call_join_start(
                         and cord_list[0][2] != cells.player
                     ):
 
-                        print("Execute")
+                        
                         cells.x = x
                         cells.y = y
                         cells.execute()
@@ -232,10 +232,9 @@ def call_join_start(
 
     else:
         if not isHost:
-            print("true")
             server_get = n.send([isHostOnly, isHost])
         else:
-            print("false")
+            
             server_get = n.send([isHostOnly, isHost, player_number - 1, grid_size])
     
     waiting_page()

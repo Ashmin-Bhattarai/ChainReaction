@@ -7,7 +7,6 @@ class Network:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server = ""
         self.port = 5555
-        # self.port = 5555
 
     def connect(self):
         try:
@@ -24,9 +23,4 @@ class Network:
         except socket.error as e:
             print(e)
 
-    # def initail_connnect(self):
-    #     try:
 
-    #         return pickle.loads(self.client.recv(2048))
-    #     except socket.error as e:
-    #         print(e)

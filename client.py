@@ -71,7 +71,7 @@ def call_join(
 
         ip_entry.bind("<FocusIn>", focus_in)
         ip_entry.insert(0, "Enter IP address")
-        # ipaddress = ipaddr.get()
+
 
     else:
 

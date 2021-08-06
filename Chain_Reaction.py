@@ -19,8 +19,6 @@ button_style = ttk.Style()
 button_style.theme_use("clam")
 
 for style in ["W.TButton", "W.TCheckbutton", "W.TLabel", "W.TEntry"]:
-    # if style == 'W.TLabel':
-    #     font = {'font': ('Arial', 10, 'bold')}
     button_style.configure(style, **font)
 
 button_style.map("W.TButton", background=[("active", "#00FABC")])
@@ -94,7 +92,6 @@ def settings_page():
             previous_img = on_img
 
     button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    # button_frame.place(x=353.7, y=512)
     button_frame.place(x=317.5, y=512)
     sound_label = ttk.Label(button_frame, style="W.TLabel", text="Sound")
     sound_label.grid(column=0, row=0, sticky=tk.W)

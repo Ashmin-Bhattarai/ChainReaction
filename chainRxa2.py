@@ -24,7 +24,7 @@ def call_this(
     sound_option,
 ):
     player_number, grid_size = int(player_number) + 1, int(grid_size)
-    # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
+
 
     def newgame_function():
         widget_destroy(root)
@@ -89,9 +89,8 @@ def call_join_start(
     sound_option,
 ):
     global cells, game_start
-    # print("call_join_start ip address=",ipaddress)
     player_number, grid_size = int(player_number) + 1, int(grid_size)
-    # print(f'No. of Player: {player_number-1}\nGrid Size: {grid_size}')
+
 
     def newgame_function():
         widget_destroy(root)
@@ -145,7 +144,7 @@ def call_join_start(
 
         c.bind("<Configure>", cells.grid)
         c.bind("<Button-1>", cells.numbering)
-        # print("Client thread started:")
+    
 
         root.mainloop()
 
@@ -158,23 +157,19 @@ def call_join_start(
 
         if not isHost:
             text = f"Waiting other to join"
-            # ip_label = ttk.Label(new_frame, style='W.TLabel', text=text)
-            # ip_label.grid(column=0, row=0, padx=5, sticky=tk.N)
-
         else:
             text = f"Your IP Address is: {ipaddress}"
 
         ip_label = ttk.Label(new_frame, style="W.TLabel", text=text)
         ip_label.grid(column=0, row=0, padx=5, sticky=tk.N)
+        if not isHostOnly:
+            def cancel():
+                global game_start
+                if game_start:
+                    call_again()
+                root.after(1000, cancel)
 
-        def cancel():
-            global game_start
-            # print(f"inside cancel game_start = {game_start}")
-            if game_start:
-                call_again()
             root.after(1000, cancel)
-
-        root.after(1000, cancel)
         root.mainloop()
 
     def server_start():
@@ -183,7 +178,6 @@ def call_join_start(
     if isHost == True:
         start_new_thread(server_start, ())
 
-    # cells = Grid(grid_size, c, players, 3)
 
     n = Network()
     n.server = ipaddress
@@ -191,16 +185,13 @@ def call_join_start(
 
     if not isHostOnly:
         if not isHost:
-            print("true")
             server_get = n.send([isHostOnly, isHost])
         else:
-            print("false")
             server_get = n.send([isHostOnly, isHost, player_number - 1, grid_size])
         cells = server_get[0]
-        print(type(cells))
         cells.myid = server_get[1]
         cells.isOnline = True
-        # print(cells.myid)
+
 
         def client():
             global cells, game_start
@@ -213,10 +204,8 @@ def call_join_start(
 
             while True:
                 clock.tick(60)
-                # print("x=", cells.x, "y=", cells.y, "played=", cells.played)
                 x, y, game_start, I = n.send([cells.x, cells.y, cells.playerIndex])
                 print(game_start)
-                # print("x=", x, "y=", y, "Index=", I)
                 if first_time:
                     cord_list.insert(0, [x, y, I])
 
@@ -224,9 +213,7 @@ def call_join_start(
                     cord_list.insert(0, [x, y, I])
                     if len(cord_list) > 2:
                         cord_list.pop()
-                    # print("cordlist=", cord_list[0], cord_list[1])
-                    # print("cord_list[0][2]=", cord_list[0][2])
-                    # print("cord_list[1][2]=", cord_list[1][2])
+
                 if not first_time:
                     if (
                         cord_list[0][2] != cord_list[1][2]
@@ -237,14 +224,11 @@ def call_join_start(
                         cells.x = x
                         cells.y = y
                         cells.execute()
-                    # elif cells.played == True:
-                    #     cells.played = False
+
 
                 first_time = False
 
         start_new_thread(client, ())
-
-        waiting_page()
 
     else:
         if not isHost:
@@ -253,6 +237,7 @@ def call_join_start(
         else:
             print("false")
             server_get = n.send([isHostOnly, isHost, player_number - 1, grid_size])
-    # while not game_start:
-    #     print(f'waiting, gamestart = {game_start}')
-    # widget_destroy(root)
+    
+    waiting_page()
+
+

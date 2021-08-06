@@ -54,12 +54,12 @@ def server_run(sound_option):
         run = True
         isHost = pickle.loads(conn.recv(2048))
         if direct_run == True:
-            isHost[0] = True
+            isHost[1] = True
             isHost.append(max_player)
             isHost.append(grid_size)
-        if isHost[0]:
-            max_player = isHost[1]
-            grid_size = isHost[2]
+        if isHost[1]:
+            max_player = isHost[2]
+            grid_size = isHost[3]
             # print("inside if=",grid_size)
             # max_player=isHost[1]
             # max_player=isHost[1]
@@ -67,7 +67,13 @@ def server_run(sound_option):
             # cells.size=isHost[2]
             host_initialize()
         # print("grid size=",cells.size)
+
         conn.sendall(pickle.dumps([cells, player_count]))
+        if isHost[0]:
+            played = False
+            playerChange = False
+            player_count -= 1
+            conn.close()
         cord_list = []
         first_time = True
         while run:
@@ -119,6 +125,7 @@ def server_run(sound_option):
         sys.exit()
 
     while True:
+        print("Server is online")
         conn, addr = s.accept()
         print("connected to: ", addr)
         player_count += 1

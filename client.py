@@ -23,7 +23,7 @@ def call_join(
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
 
-    def start(ip):
+    def start(ip, isHostOnly):
         if len(ip) == 0:
             ip = ipaddress
         call_join_start(
@@ -37,6 +37,7 @@ def call_join(
             selected_gridSize,
             button_style,
             isHost,
+            isHostOnly,
             ip,
             sound_option,
         )
@@ -99,8 +100,13 @@ def call_join(
         for widget in new_frame.winfo_children():
             widget.grid(padx=5, pady=3)
 
+        host_only = ttk.Button(new_frame, text="Host Only", style="W.TButton", command=lambda: start(ipaddr.get(), True))
+        host_only.grid(column=2, row=3, padx=5, pady=5, sticky=tk.W)
+
+
+
     submit_button = ttk.Button(
-        new_frame, text="Submit", style="W.TButton", command=lambda: start(ipaddr.get())
+        new_frame, text="Submit", style="W.TButton", command=lambda: start(ipaddr.get(), False)
     )
     submit_button.grid(column=0, row=3, padx=5, pady=5, sticky=tk.W)
 
@@ -108,4 +114,8 @@ def call_join(
         new_frame, text="Back", style="W.TButton", command=local_page
     )
     back_button.grid(column=1, row=3, padx=5, pady=5, sticky=tk.E)
+
+    
+
+
     root.mainloop()

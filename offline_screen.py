@@ -40,7 +40,7 @@ def mainScreen(root, home_page, image_frame, button_style, sound_option):
     widget_destroy(root)
     image_frame()
     player_seclection_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    player_seclection_frame.place(x=271, y=512.5)
+    player_seclection_frame.place(x=172, y=390)
 
     no_of_players = ttk.Combobox(player_seclection_frame)
     no_of_players["values"] = values[:7]
@@ -68,7 +68,7 @@ def mainScreen(root, home_page, image_frame, button_style, sound_option):
         widget.grid(padx=5, pady=3)
 
     start_button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    start_button_frame.place(x=300, y=606)
+    start_button_frame.place(x=205, y=460)
     start_btn = ttk.Button(
         start_button_frame, text="start", style="W.TButton", command=gameStart
     )

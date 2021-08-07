@@ -36,7 +36,7 @@ def home_page():
     widget_destroy(root)
     image_frame()
     button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    button_frame.place(x=353.7, y=512)
+    button_frame.place(x=252, y=390)
     offline_button = ttk.Button(
         button_frame, text="Offline", style="W.TButton", command=offline_page
     )
@@ -57,7 +57,7 @@ def local_page():
     widget_destroy(root)
     image_frame()
     button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    button_frame.place(x=353.7, y=512)
+    button_frame.place(x=252, y=390)
     host_button = ttk.Button(
         button_frame, text="Host", style="W.TButton", command=lambda: join_page(True)
     )
@@ -92,7 +92,7 @@ def settings_page():
             previous_img = on_img
 
     button_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    button_frame.place(x=317.5, y=512)
+    button_frame.place(x=225, y=390)
     sound_label = ttk.Label(button_frame, style="W.TLabel", text="Sound")
     sound_label.grid(column=0, row=0, sticky=tk.W)
     sound_button = tk.Button(button_frame, image=previous_img, bd=0, command=toggle)

@@ -11,13 +11,12 @@ max_player = 2
 cells = 0
 grid_size = 8
 direct_run = False
+game_start = False
 p = -1
 
 
 def server_run(sound_option):
-    global player_count, p
-
-    game_start = False
+    global player_count, game_start, p
 
     hostname = socket.gethostname()
     ipaddress = socket.gethostbyname(hostname)
@@ -66,7 +65,7 @@ def server_run(sound_option):
         cord_list = []
         first_time = True
         while run:
-            print("Player_count",player_count,"max_player",max_player)
+            print("Player_count", player_count, "max_player", max_player)
             try:
                 Tx, Ty, TI = pickle.loads(conn.recv(2048))
 
@@ -99,7 +98,7 @@ def server_run(sound_option):
         sys.exit()
 
     print("Server is online")
-    while True:        
+    while True:
         conn, addr = s.accept()
         print("connected to: ", addr)
         player_count += 1

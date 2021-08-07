@@ -46,7 +46,6 @@ def call_join(
     image_frame()
 
     new_frame = ttk.Frame(root, relief="raised", borderwidth=2)
-    new_frame.place(x=210, y=512.5)
     text = "IP Address: "
     ipaddr = tk.StringVar()
 
@@ -60,11 +59,12 @@ def call_join(
 
     if not isHost:
 
+        new_frame.place(x=125, y=390)
         ip_label = ttk.Label(new_frame, style="W.TLabel", text=text)
-        ip_label.grid(column=0, row=0, padx=5, sticky=tk.N)
+        ip_label.grid(column=0, row=0, padx=10, sticky=tk.W)
 
         ip_entry = ttk.Entry(new_frame, textvariable=ipaddr, style="W.TEntry", width=30)
-        ip_entry.grid(column=1, row=0, sticky=tk.W)
+        ip_entry.grid(column=1, row=0, padx=10, sticky=tk.E)
 
         def focus_in(*args):
             ip_entry.delete(0, "end")
@@ -72,9 +72,8 @@ def call_join(
         ip_entry.bind("<FocusIn>", focus_in)
         ip_entry.insert(0, "Enter IP address")
 
-
     else:
-
+        new_frame.place(x=100, y=390)
         player_size = ttk.Combobox(new_frame)
         player_size["values"] = values[:7]
         player_size["state"] = "readonly"
@@ -119,6 +118,7 @@ def call_join(
     back_button = ttk.Button(
         new_frame, text="Back", style="W.TButton", command=local_page
     )
-    back_button.grid(column=2, row=3, padx=5, pady=5)
+    column = 1 if not isHost else 2
+    back_button.grid(column=column, row=3, padx=5, pady=5)
 
     root.mainloop()
